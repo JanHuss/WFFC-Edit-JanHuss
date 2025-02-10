@@ -13,7 +13,6 @@
 #include "InputCommands.h"
 #include <vector>
 
-
 // A basic game implementation that creates a D3D11 device and
 // provides a game loop.
 class Game : public DX::IDeviceNotify
@@ -58,6 +57,7 @@ public:
 private:
 
 	void Update(DX::StepTimer const& timer);
+	void ProcessMouseMovement();
 
 	void CreateDeviceDependentResources();
 	void CreateWindowSizeDependentResources();
@@ -71,7 +71,10 @@ private:
 
 	//functionality
 	float								m_movespeed;
-
+	float lastMouseX = 0.0f;
+	float lastMouseY = 0.0f;
+	bool firstMouse = true; 
+	
 	//camera
 	DirectX::SimpleMath::Vector3		m_camPosition;
 	DirectX::SimpleMath::Vector3		m_camOrientation;

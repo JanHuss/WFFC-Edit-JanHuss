@@ -305,12 +305,22 @@ void ToolMain::UpdateInput(MSG * msg)
 		m_keyArray[msg->wParam] = false;
 		break;
 
-	case WM_MOUSEMOVE:
-		break;
-
-	case WM_LBUTTONDOWN:	//mouse button down,  you will probably need to check when its up too
-		//set some flag for the mouse button in inputcommands
-		break;
+	case WM_ACTIVATE:
+    case WM_ACTIVATEAPP:
+    case WM_INPUT:
+    case WM_MOUSEMOVE:
+    case WM_LBUTTONDOWN:
+    case WM_LBUTTONUP:
+    case WM_RBUTTONDOWN:
+    case WM_RBUTTONUP:
+    case WM_MBUTTONDOWN:
+    case WM_MBUTTONUP:
+    case WM_MOUSEWHEEL:
+    case WM_XBUTTONDOWN:
+    case WM_XBUTTONUP:
+    case WM_MOUSEHOVER:
+        DirectX::Mouse::ProcessMessage(msg->message, msg->wParam, msg->lParam);
+        break;
 
 	}
 	//here we update all the actual app functionality that we want.  This information will either be used int toolmain, or sent down to the renderer (Camera movement etc
@@ -337,6 +347,14 @@ void ToolMain::UpdateInput(MSG * msg)
 		m_toolInputCommands.right = true;
 	}
 	else m_toolInputCommands.right = false;
+	if (m_keyArray['R'])
+		m_toolInputCommands.up = true;
+	else
+		m_toolInputCommands.up = false;
+	if (m_keyArray['F'])
+		m_toolInputCommands.down = true;
+	else
+		m_toolInputCommands.down = false;
 	//rotation
 	if (m_keyArray['E'])
 	{
@@ -348,6 +366,18 @@ void ToolMain::UpdateInput(MSG * msg)
 		m_toolInputCommands.rotLeft = true;
 	}
 	else m_toolInputCommands.rotLeft = false;
+	if (m_keyArray['U'])
+		m_toolInputCommands.rotUP = true;
+	else 
+		m_toolInputCommands.rotUP = false;
+	if (m_keyArray['J'])
+		m_toolInputCommands.rotDown = true;
+	else
+		m_toolInputCommands.rotDown = false;
 
+	POINT mousePos;
+	GetCursorPos(&mousePos);
+	
+	
 	//WASD
 }

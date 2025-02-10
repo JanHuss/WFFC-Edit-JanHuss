@@ -84,6 +84,7 @@ void Game::Initialize(HWND window, int width, int height)
     m_deviceResources->CreateWindowSizeDependentResources();
     CreateWindowSizeDependentResources();
 
+
 #ifdef DXTK_AUDIO
     // Create DirectXTK for Audio objects
     AUDIO_ENGINE_FLAGS eflags = AudioEngine_Default;
@@ -142,6 +143,9 @@ void Game::Update(DX::StepTimer const& timer)
 {
 	//TODO  any more complex than this, and the camera should be abstracted out to somewhere else
 	//camera motion is on a plane, so kill the 7 component of the look direction
+	
+	// camera rotation
+	
 	Vector3 planarMotionVector = m_camLookDirection;
 	planarMotionVector.y = 0.0;
 
@@ -153,32 +157,61 @@ void Game::Update(DX::StepTimer const& timer)
 	{
 		m_camOrientation.y += m_camRotRate;
 	}
+	if (m_InputCommands.rotUP)
+	{
+		m_camOrientation.x += m_camRotRate;
+		// prevent flipping
+		if (m_camOrientation.x > 89.0f) 
+			m_camOrientation.x = 89.0f;
+	}
+	if (m_InputCommands.rotDown)
+	{
+		m_camOrientation.x -= m_camRotRate;
+		// prevent flipping
+		if (m_camOrientation.x < -89.0f)
+			m_camOrientation.x = -89.0f;
+	}
+	
+	ProcessMouseMovement();
+
+	float yaw = m_camOrientation.y *3.1415f / 180.0f;
+	float pitch = m_camOrientation.x * 3.1415f /180.0f;
+
+	m_camLookDirection.x = cos(pitch) * sin(yaw);
+	m_camLookDirection.y = sin(pitch);
+	m_camLookDirection.z = cos(pitch) * cos(yaw);
+
 
 	//create look direction from Euler angles in m_camOrientation
-	m_camLookDirection.x = sin((m_camOrientation.y)*3.1415 / 180);
-	m_camLookDirection.z = cos((m_camOrientation.y)*3.1415 / 180);
+	//m_camLookDirection.x = sin((m_camOrientation.y)*3.1415 / 180);
+	//m_camLookDirection.z = cos((m_camOrientation.y)*3.1415 / 180);
 	m_camLookDirection.Normalize();
 
 	//create right vector from look Direction
 	m_camLookDirection.Cross(Vector3::UnitY, m_camRight);
+	m_camRight.Normalize();
 
 	//process input and update stuff
 	if (m_InputCommands.forward)
 	{	
-		m_camPosition += m_camLookDirection*m_movespeed;
+		m_camPosition += m_camLookDirection * m_movespeed;
 	}
 	if (m_InputCommands.back)
 	{
-		m_camPosition -= m_camLookDirection*m_movespeed;
+		m_camPosition -= m_camLookDirection * m_movespeed;
 	}
 	if (m_InputCommands.right)
 	{
-		m_camPosition += m_camRight*m_movespeed;
+		m_camPosition += m_camRight * m_movespeed;
 	}
 	if (m_InputCommands.left)
 	{
-		m_camPosition -= m_camRight*m_movespeed;
+		m_camPosition -= m_camRight * m_movespeed;
 	}
+	if (m_InputCommands.up)
+		m_camPosition.y += m_movespeed;
+	if (m_InputCommands.down)
+		m_camPosition.y -= m_movespeed;
 
 	//update lookat point
 	m_camLookAt = m_camPosition + m_camLookDirection;
@@ -217,6 +250,46 @@ void Game::Update(DX::StepTimer const& timer)
 #endif
 
    
+}
+void Game::ProcessMouseMovement()
+{
+	Mouse::State mouseState = m_mouse->GetState();
+
+	if (mouseState.rightButton)
+	{
+		m_mouse->SetMode(Mouse::MODE_RELATIVE);
+
+		float sensitivity = 0.1f;
+
+		float offsetX = (mouseState.x) * sensitivity;
+		float offsetY = (mouseState.y) * sensitivity;
+
+		m_camOrientation.y -= offsetX;
+		m_camOrientation.x -= offsetY;
+
+		// Preventing flipping
+		if (m_camOrientation.x > 89.0f) 
+			m_camOrientation.x = 89.0f;
+        if (m_camOrientation.x < -89.0f) 
+			m_camOrientation.x = -89.0f;
+
+		float yaw = XMConvertToRadians(m_camOrientation.y);
+		float pitch = XMConvertToRadians(m_camOrientation.x);
+
+		m_camLookDirection.x = cosf(pitch) * sinf(yaw);
+		m_camLookDirection.y = sinf(pitch);
+		m_camLookDirection.z = cosf(pitch) * cosf(yaw);
+		m_camLookDirection.Normalize();
+
+		m_camRight = m_camLookDirection.Cross(Vector3::UnitY);
+		m_camRight.Normalize();
+
+	}
+	else
+	{
+		m_mouse->SetMode(Mouse::MODE_ABSOLUTE);
+		firstMouse = true;
+	}
 }
 #pragma endregion
 

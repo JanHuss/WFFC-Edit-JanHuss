@@ -1,4 +1,5 @@
 #pragma once
+#include <vector>
 
 struct InputCommands
 {
@@ -6,6 +7,10 @@ struct InputCommands
 	bool back;
 	bool right;
 	bool left;
+	bool up;
+	bool down;
 	bool rotRight;
 	bool rotLeft;
+	bool rotUP;
+	bool rotDown;
 };
