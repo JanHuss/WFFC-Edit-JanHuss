@@ -57,6 +57,9 @@ void ToolMain::onActionInitialise(HWND handle, int width, int height)
 	}
 
 	onActionLoad();
+
+	// capture mouse position if dragged outside of window
+	SetCapture(handle);
 }
 
 void ToolMain::onActionLoad()
