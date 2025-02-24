@@ -18,6 +18,10 @@ ToolMain::ToolMain()
 	m_toolInputCommands.back		= false;
 	m_toolInputCommands.left		= false;
 	m_toolInputCommands.right		= false;
+
+	m_toolInputCommands.mouse_x = 0;
+	m_toolInputCommands.mouse_y = 0;
+	m_toolInputCommands.mouse_lb_Down = false;
 	
 }
 
@@ -59,7 +63,7 @@ void ToolMain::onActionInitialise(HWND handle, int width, int height)
 	onActionLoad();
 
 	// capture mouse position if dragged outside of window
-	SetCapture(handle);
+	//SetCapture(handle);
 }
 
 void ToolMain::onActionLoad()
@@ -290,6 +294,12 @@ void ToolMain::Tick(MSG *msg)
 		//add to scenegraph
 		//resend scenegraph to Direct X renderer
 
+	if (m_toolInputCommands.mouse_lb_Down)
+	{
+		m_selectedObject = m_d3dRenderer.MousePicking();
+		m_toolInputCommands.mouse_lb_Down = false;
+	}
+
 	//Renderer Update Call
 	m_d3dRenderer.Tick(&m_toolInputCommands);
 }
@@ -312,7 +322,14 @@ void ToolMain::UpdateInput(MSG * msg)
     case WM_ACTIVATEAPP:
     case WM_INPUT:
     case WM_MOUSEMOVE:
+		// update mouse x and y
+		m_toolInputCommands.mouse_x = GET_X_LPARAM(msg->lParam);
+		m_toolInputCommands.mouse_y = GET_Y_LPARAM(msg->lParam);
+		break;		
     case WM_LBUTTONDOWN:
+		// left mouse button pressed
+		m_toolInputCommands.mouse_lb_Down = true;
+		break;
     case WM_LBUTTONUP:
     case WM_RBUTTONDOWN:
     case WM_RBUTTONUP:
