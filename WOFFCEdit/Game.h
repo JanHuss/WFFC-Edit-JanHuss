@@ -50,6 +50,9 @@ public:
 	void SaveDisplayChunk(ChunkObject *SceneChunk);	//saves geometry et al
 	void ClearDisplayList();
 
+	// Jan Tools
+	void cameraMovement();
+
 #ifdef DXTK_AUDIO
 	void NewAudioDevice();
 #endif
