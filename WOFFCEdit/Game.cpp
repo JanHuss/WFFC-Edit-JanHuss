@@ -6,6 +6,7 @@
 #include "Game.h"
 #include "DisplayObject.h"
 #include <string>
+#include <cfloat>
 
 
 using namespace DirectX;
@@ -84,6 +85,8 @@ void Game::Initialize(HWND window, int width, int height)
     m_deviceResources->CreateWindowSizeDependentResources();
     CreateWindowSizeDependentResources();
 
+	GetClientRect(window, &m_ScreenDimensions);
+
 
 #ifdef DXTK_AUDIO
     // Create DirectXTK for Audio objects
@@ -125,6 +128,13 @@ void Game::Tick(InputCommands *Input)
         Update(m_timer);
     });
 
+	Mouse::State mouseState = m_mouse->GetState();
+	if (mouseState.leftButton)
+	{
+		m_selectedObject = MousePicking();
+		mouseState.leftButton = false;
+	}
+
 #ifdef DXTK_AUDIO
     // Only update audio engine once per frame
     if (!m_audEngine->IsCriticalError() && m_audEngine->Update())
@@ -144,7 +154,7 @@ void Game::Update(DX::StepTimer const& timer)
 	//TODO  any more complex than this, and the camera should be abstracted out to somewhere else
 	//camera motion is on a plane, so kill the 7 component of the look direction
 	
-	cameraMovement();
+	cameraMovement(timer);
 
     m_batchEffect->SetView(m_view);
     m_batchEffect->SetWorld(Matrix::Identity);
@@ -178,46 +188,7 @@ void Game::Update(DX::StepTimer const& timer)
 
    
 }
-void Game::ProcessMouseMovement()
-{
-	Mouse::State mouseState = m_mouse->GetState();
 
-	if (mouseState.rightButton)
-	{
-		m_mouse->SetMode(Mouse::MODE_RELATIVE);
-
-		float sensitivity = 0.1f;
-
-		float offsetX = (mouseState.x) * sensitivity;
-		float offsetY = (mouseState.y) * sensitivity;
-
-		m_camOrientation.y -= offsetX;
-		m_camOrientation.x -= offsetY;
-
-		// Preventing flipping
-		if (m_camOrientation.x > 89.0f) 
-			m_camOrientation.x = 89.0f;
-        if (m_camOrientation.x < -89.0f) 
-			m_camOrientation.x = -89.0f;
-
-		float yaw = XMConvertToRadians(m_camOrientation.y);
-		float pitch = XMConvertToRadians(m_camOrientation.x);
-
-		m_camLookDirection.x = cosf(pitch) * sinf(yaw);
-		m_camLookDirection.y = sinf(pitch);
-		m_camLookDirection.z = cosf(pitch) * cosf(yaw);
-		m_camLookDirection.Normalize();
-
-		m_camRight = m_camLookDirection.Cross(Vector3::UnitY);
-		m_camRight.Normalize();
-
-	}
-	else
-	{
-		m_mouse->SetMode(Mouse::MODE_ABSOLUTE);
-		firstMouse = true;
-	}
-}
 #pragma endregion
 
 #pragma region Frame Render
@@ -482,7 +453,7 @@ void Game::SaveDisplayChunk(ChunkObject * SceneChunk)
 	m_displayChunk.SaveHeightMap();			//save heightmap to file.
 }
 
-void Game::cameraMovement()
+void Game::cameraMovement(DX::StepTimer const& timer)
 {
     // camera rotation
 	
@@ -512,7 +483,7 @@ void Game::cameraMovement()
 			m_camOrientation.x = -89.0f;
 	}
 	
-	ProcessMouseMovement();
+	ProcessMouseMovement(timer);
 
 	float yaw = m_camOrientation.y *3.1415f / 180.0f;
 	float pitch = m_camOrientation.x * 3.1415f /180.0f;
@@ -558,6 +529,139 @@ void Game::cameraMovement()
 
 	//apply camera vectors
     m_view = Matrix::CreateLookAt(m_camPosition, m_camLookAt, Vector3::UnitY);
+}
+
+void Game::ProcessMouseMovement(DX::StepTimer const& timer)
+{
+	Mouse::State mouseState = m_mouse->GetState();
+	float deltaTime = 1.0f;
+
+	if (timer.GetFramesPerSecond() != 0)
+	deltaTime = 1.0f/timer.GetFramesPerSecond();
+
+	if (mouseState.rightButton)
+	{
+		m_mouse->SetMode(Mouse::MODE_RELATIVE);
+
+		float sensitivity = 10.0f;
+
+		float offsetX = (mouseState.x) * sensitivity * deltaTime;
+		float offsetY = (mouseState.y) * sensitivity * deltaTime;
+
+		m_camOrientation.y -= offsetX;
+		m_camOrientation.x -= offsetY;
+
+		// Preventing flipping
+		if (m_camOrientation.x > 89.0f) 
+			m_camOrientation.x = 89.0f;
+        if (m_camOrientation.x < -89.0f) 
+			m_camOrientation.x = -89.0f;
+
+		float yaw = XMConvertToRadians(m_camOrientation.y);
+		float pitch = XMConvertToRadians(m_camOrientation.x);
+
+		m_camLookDirection.x = cosf(pitch) * sinf(yaw);
+		m_camLookDirection.y = sinf(pitch);
+		m_camLookDirection.z = cosf(pitch) * cosf(yaw);
+		m_camLookDirection.Normalize();
+
+		m_camRight = m_camLookDirection.Cross(Vector3::UnitY);
+		m_camRight.Normalize();
+
+	}
+	else
+	{
+		m_mouse->SetMode(Mouse::MODE_ABSOLUTE);
+		firstMouse = true;
+	}
+}
+int Game::MousePicking()
+{
+	Mouse::State mouseState = m_mouse->GetState();
+	int selectedID = -1;
+	float closestDistance = FLT_MAX;
+	float pickedDistance = 0;
+
+	// create near and far planes of the view frustrum using x & y mouse coordinates
+	// near field
+	const XMVECTOR nearSource = XMVectorSet(mouseState.x, 
+		mouseState.y, 0.0f, 1.0f);
+	// far field
+	const XMVECTOR farSource = XMVectorSet(mouseState.x, 
+		mouseState.y, 1.0f, 1.0f);
+
+	// loop through display list of all objects
+	for(int i = 0; i < m_displayList.size(); i++)
+	{
+		// retrieve scale and translation factors of an object
+		const XMVECTORF32 scale = {m_displayList[i].m_scale.x, 
+			m_displayList[i].m_scale.y, m_displayList[i].m_scale.z};
+		const XMVECTORF32 translate = {m_displayList[i].m_position.x, 
+			m_displayList[i].m_position.y, m_displayList[i].m_position.z};
+	
+		// convert euler angles into quaternions - used for object rotation
+		XMVECTOR rotate = Quaternion::CreateFromYawPitchRoll(
+			m_displayList[i].m_orientation.y * 3.1415 / 180, 
+			m_displayList[i].m_orientation.x * 3.1415 / 180, 
+			m_displayList[i].m_orientation.z * 3.1415 / 180);
+
+		// set matrix of selected object based on its object transport controls
+		XMMATRIX local = m_world * XMMatrixTransformation(g_XMZero, 
+			Quaternion::Identity, 
+			scale, 
+			g_XMZero, 
+			rotate, 
+			translate);
+
+		// In respect to the matrix, UNPROJECT the points on the near and far planes
+		XMVECTOR nearPoint = XMVector3Unproject(nearSource, 
+			0.0f, 
+			0.0f, 
+			m_ScreenDimensions.right,
+			m_ScreenDimensions.bottom, 
+			m_deviceResources->GetScreenViewport().MinDepth, 
+			m_deviceResources->GetScreenViewport().MaxDepth, 
+			m_projection, m_view, 
+			local);
+
+		XMVECTOR farPoint = XMVector3Unproject(farSource, 
+			0.0f, 
+			0.0f, 
+			m_ScreenDimensions.right,
+			m_ScreenDimensions.bottom, 
+			m_deviceResources->GetScreenViewport().MinDepth, 
+			m_deviceResources->GetScreenViewport().MaxDepth, 
+			m_projection, m_view, 
+			local);
+		
+		// change the two points into a "picking Vector"
+		XMVECTOR  pickingVector = farPoint - nearPoint;
+		pickingVector = XMVector3Normalize(pickingVector);
+
+		// iterate through mesh list to find the object
+		for (int y = 0; y < m_displayList[i].m_model.get()->meshes.size(); y++)
+		{
+			// temp variable to store the distance for this mesh
+			float tempDistance = 0;
+			// checking for ray intersection
+			if (m_displayList[i].m_model.get()->meshes[y]->boundingBox.Intersects(nearPoint, pickingVector,tempDistance))
+			{
+				if (tempDistance < closestDistance)
+				{
+					closestDistance = tempDistance;
+					selectedID = i;
+				}
+
+			}
+		}
+	}		
+
+	return selectedID;
+}
+
+int Game::getSelectedObject()
+{
+	return m_selectedObject;
 }
 
 #ifdef DXTK_AUDIO

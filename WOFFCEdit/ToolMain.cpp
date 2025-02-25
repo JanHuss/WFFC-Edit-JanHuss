@@ -31,7 +31,7 @@ ToolMain::~ToolMain()
 int ToolMain::getCurrentSelectionID()
 {
 
-	return m_selectedObject;
+	return m_d3dRenderer.getSelectedObject();
 }
 
 void ToolMain::onActionInitialise(HWND handle, int width, int height)
@@ -289,7 +289,7 @@ void ToolMain::Tick(MSG *msg)
 		//update Scenegraph
 		//add to scenegraph
 		//resend scenegraph to Direct X renderer
-
+	m_selectedObject = m_d3dRenderer.getSelectedObject();
 	//Renderer Update Call
 	m_d3dRenderer.Tick(&m_toolInputCommands);
 }
@@ -307,7 +307,6 @@ void ToolMain::UpdateInput(MSG * msg)
 	case WM_KEYUP:
 		m_keyArray[msg->wParam] = false;
 		break;
-
 	case WM_ACTIVATE:
     case WM_ACTIVATEAPP:
     case WM_INPUT:
@@ -324,6 +323,8 @@ void ToolMain::UpdateInput(MSG * msg)
     case WM_MOUSEHOVER:
         DirectX::Mouse::ProcessMessage(msg->message, msg->wParam, msg->lParam);
         break;
+
+
 
 	}
 	//here we update all the actual app functionality that we want.  This information will either be used int toolmain, or sent down to the renderer (Camera movement etc
@@ -377,9 +378,10 @@ void ToolMain::UpdateInput(MSG * msg)
 		m_toolInputCommands.rotDown = true;
 	else
 		m_toolInputCommands.rotDown = false;
-
-	POINT mousePos;
-	GetCursorPos(&mousePos);
+	if (m_keyArray[VK_ESCAPE])
+		PostQuitMessage(0);
+	//POINT mousePos;
+	//GetCursorPos(&mousePos);
 	
 	
 	//WASD

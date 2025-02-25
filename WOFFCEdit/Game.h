@@ -51,7 +51,12 @@ public:
 	void ClearDisplayList();
 
 	// Jan Tools
-	void cameraMovement();
+	void cameraMovement(DX::StepTimer const& timer);
+	void ProcessMouseMovement(DX::StepTimer const& timer);
+	int MousePicking();
+	int getSelectedObject();
+	int m_selectedObject;
+	RECT m_ScreenDimensions;
 
 #ifdef DXTK_AUDIO
 	void NewAudioDevice();
@@ -60,7 +65,6 @@ public:
 private:
 
 	void Update(DX::StepTimer const& timer);
-	void ProcessMouseMovement();
 
 	void CreateDeviceDependentResources();
 	void CreateWindowSizeDependentResources();
