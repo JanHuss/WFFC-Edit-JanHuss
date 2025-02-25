@@ -54,9 +54,11 @@ public:
 	void cameraMovement(DX::StepTimer const& timer);
 	void ProcessMouseMovement(DX::StepTimer const& timer);
 	int MousePicking();
-	int getSelectedObject();
+	std::vector<int> m_selectedObjects;
 	int m_selectedObject;
+	int getSelectedObject();
 	RECT m_ScreenDimensions;
+	
 
 #ifdef DXTK_AUDIO
 	void NewAudioDevice();

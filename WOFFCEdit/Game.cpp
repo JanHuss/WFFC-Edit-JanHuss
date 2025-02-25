@@ -128,12 +128,36 @@ void Game::Tick(InputCommands *Input)
         Update(m_timer);
     });
 
-	Mouse::State mouseState = m_mouse->GetState();
-	if (mouseState.leftButton)
+	Mouse::State currentMouseState = m_mouse->GetState();
+	static Mouse::State previousMouseState;
+	Keyboard::State currentKeyboard = m_keyboard->GetState();
+
+	if (currentMouseState.leftButton && !previousMouseState.leftButton)
 	{
-		m_selectedObject = MousePicking();
-		mouseState.leftButton = false;
+		int pickedID = MousePicking();
+
+		bool multiSelectEnabled = currentKeyboard.LeftShift;
+		
+		if (m_InputCommands.leftShift)
+		{
+			auto iterator = std::find(m_selectedObjects.begin(), m_selectedObjects.end(), pickedID);
+			if (iterator != m_selectedObjects.end())
+				m_selectedObjects.erase(iterator);
+			else if (pickedID!= -1)
+				m_selectedObjects.push_back(pickedID);
+		}
+		else
+		{
+			m_selectedObjects.clear();
+			if (pickedID != -1)
+				m_selectedObjects.push_back(pickedID);
+		}
+		if (m_selectedObject == pickedID)
+			m_selectedObject = -1;
+		else
+			m_selectedObject = pickedID;
 	}
+	previousMouseState = currentMouseState;
 
 #ifdef DXTK_AUDIO
     // Only update audio engine once per frame
@@ -578,84 +602,96 @@ void Game::ProcessMouseMovement(DX::StepTimer const& timer)
 int Game::MousePicking()
 {
 	Mouse::State mouseState = m_mouse->GetState();
-	int selectedID = -1;
-	float closestDistance = FLT_MAX;
 	float pickedDistance = 0;
 
-	// create near and far planes of the view frustrum using x & y mouse coordinates
-	// near field
-	const XMVECTOR nearSource = XMVectorSet(mouseState.x, 
-		mouseState.y, 0.0f, 1.0f);
-	// far field
-	const XMVECTOR farSource = XMVectorSet(mouseState.x, 
-		mouseState.y, 1.0f, 1.0f);
 
-	// loop through display list of all objects
-	for(int i = 0; i < m_displayList.size(); i++)
-	{
-		// retrieve scale and translation factors of an object
-		const XMVECTORF32 scale = {m_displayList[i].m_scale.x, 
-			m_displayList[i].m_scale.y, m_displayList[i].m_scale.z};
-		const XMVECTORF32 translate = {m_displayList[i].m_position.x, 
-			m_displayList[i].m_position.y, m_displayList[i].m_position.z};
-	
-		// convert euler angles into quaternions - used for object rotation
-		XMVECTOR rotate = Quaternion::CreateFromYawPitchRoll(
-			m_displayList[i].m_orientation.y * 3.1415 / 180, 
-			m_displayList[i].m_orientation.x * 3.1415 / 180, 
-			m_displayList[i].m_orientation.z * 3.1415 / 180);
+		int selectedID = -1;
+		float closestDistance = FLT_MAX;
 
-		// set matrix of selected object based on its object transport controls
-		XMMATRIX local = m_world * XMMatrixTransformation(g_XMZero, 
-			Quaternion::Identity, 
-			scale, 
-			g_XMZero, 
-			rotate, 
-			translate);
+		// create near and far planes of the view frustrum using x & y mouse coordinates
+		// near field
+		const XMVECTOR nearSource = XMVectorSet(mouseState.x, 
+			mouseState.y, 0.0f, 1.0f);
+		// far field
+		const XMVECTOR farSource = XMVectorSet(mouseState.x, 
+			mouseState.y, 1.0f, 1.0f);
 
-		// In respect to the matrix, UNPROJECT the points on the near and far planes
-		XMVECTOR nearPoint = XMVector3Unproject(nearSource, 
-			0.0f, 
-			0.0f, 
-			m_ScreenDimensions.right,
-			m_ScreenDimensions.bottom, 
-			m_deviceResources->GetScreenViewport().MinDepth, 
-			m_deviceResources->GetScreenViewport().MaxDepth, 
-			m_projection, m_view, 
-			local);
-
-		XMVECTOR farPoint = XMVector3Unproject(farSource, 
-			0.0f, 
-			0.0f, 
-			m_ScreenDimensions.right,
-			m_ScreenDimensions.bottom, 
-			m_deviceResources->GetScreenViewport().MinDepth, 
-			m_deviceResources->GetScreenViewport().MaxDepth, 
-			m_projection, m_view, 
-			local);
-		
-		// change the two points into a "picking Vector"
-		XMVECTOR  pickingVector = farPoint - nearPoint;
-		pickingVector = XMVector3Normalize(pickingVector);
-
-		// iterate through mesh list to find the object
-		for (int y = 0; y < m_displayList[i].m_model.get()->meshes.size(); y++)
+		// loop through display list of all objects
+		for(int i = 0; i < m_displayList.size(); i++)
 		{
-			// temp variable to store the distance for this mesh
-			float tempDistance = 0;
-			// checking for ray intersection
-			if (m_displayList[i].m_model.get()->meshes[y]->boundingBox.Intersects(nearPoint, pickingVector,tempDistance))
+			// retrieve scale and translation factors of an object
+			const XMVECTORF32 scale = {m_displayList[i].m_scale.x, 
+				m_displayList[i].m_scale.y, m_displayList[i].m_scale.z};
+			const XMVECTORF32 translate = {m_displayList[i].m_position.x, 
+				m_displayList[i].m_position.y, m_displayList[i].m_position.z};
+	
+			// convert euler angles into quaternions - used for object rotation
+			XMVECTOR rotate = Quaternion::CreateFromYawPitchRoll(
+				m_displayList[i].m_orientation.y * 3.1415 / 180, 
+				m_displayList[i].m_orientation.x * 3.1415 / 180, 
+				m_displayList[i].m_orientation.z * 3.1415 / 180);
+
+			// set matrix of selected object based on its object transport controls
+			XMMATRIX local = m_world * XMMatrixTransformation(g_XMZero, 
+				Quaternion::Identity, 
+				scale, 
+				g_XMZero, 
+				rotate, 
+				translate);
+
+			// In respect to the matrix, UNPROJECT the points on the near and far planes
+			XMVECTOR nearPoint = XMVector3Unproject(nearSource, 
+				0.0f, 
+				0.0f, 
+				m_ScreenDimensions.right,
+				m_ScreenDimensions.bottom, 
+				m_deviceResources->GetScreenViewport().MinDepth, 
+				m_deviceResources->GetScreenViewport().MaxDepth, 
+				m_projection, m_view, 
+				local);
+
+			XMVECTOR farPoint = XMVector3Unproject(farSource, 
+				0.0f, 
+				0.0f, 
+				m_ScreenDimensions.right,
+				m_ScreenDimensions.bottom, 
+				m_deviceResources->GetScreenViewport().MinDepth, 
+				m_deviceResources->GetScreenViewport().MaxDepth, 
+				m_projection, m_view, 
+				local);
+		
+			// change the two points into a "picking Vector"
+			XMVECTOR  pickingVector = farPoint - nearPoint;
+			pickingVector = XMVector3Normalize(pickingVector);
+
+			// iterate through mesh list to find the object
+			for (int y = 0; y < m_displayList[i].m_model.get()->meshes.size(); y++)
 			{
-				if (tempDistance < closestDistance)
+				// temp variable to store the distance for this mesh
+				float tempDistance = 0;
+				// checking for ray intersection
+				if (m_displayList[i].m_model.get()->meshes[y]->boundingBox.Intersects(nearPoint, pickingVector,tempDistance))
 				{
-					closestDistance = tempDistance;
-					selectedID = i;
+					if (tempDistance < closestDistance)
+					{
+						closestDistance = tempDistance;
+						selectedID = i;
+					}
+
 				}
-
 			}
-		}
-	}		
+		}	
 
+		//// deselect feature. does handles too fast
+		//if (selectedID == m_selectedObject)
+		//{
+		//	m_selectedObject = -1;
+		//	selectedID = -1;
+		//}
+		//else
+		//{
+		//	m_selectedObject = selectedID;
+		//}
 	return selectedID;
 }
 

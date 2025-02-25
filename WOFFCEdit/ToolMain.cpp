@@ -380,6 +380,10 @@ void ToolMain::UpdateInput(MSG * msg)
 		m_toolInputCommands.rotDown = false;
 	if (m_keyArray[VK_ESCAPE])
 		PostQuitMessage(0);
+	if (VK_LSHIFT)
+		m_toolInputCommands.leftShift = true;
+	else
+		m_toolInputCommands.leftShift = false;
 	//POINT mousePos;
 	//GetCursorPos(&mousePos);
 	
