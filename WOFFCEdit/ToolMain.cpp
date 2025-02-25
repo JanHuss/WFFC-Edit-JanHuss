@@ -19,6 +19,8 @@ ToolMain::ToolMain()
 	m_toolInputCommands.left		= false;
 	m_toolInputCommands.right		= false;
 	
+
+	m_toolInputCommands.leftShift = false;
 }
 
 
@@ -32,6 +34,16 @@ int ToolMain::getCurrentSelectionID()
 {
 
 	return m_d3dRenderer.getSelectedObject();
+}
+
+std::vector<int> ToolMain::getCurrentSelectionIDs()
+{
+	return m_d3dRenderer.m_selectedObjects;
+}
+
+bool ToolMain::getBool()
+{
+	return m_toolInputCommands.leftShift;
 }
 
 void ToolMain::onActionInitialise(HWND handle, int width, int height)
@@ -380,7 +392,7 @@ void ToolMain::UpdateInput(MSG * msg)
 		m_toolInputCommands.rotDown = false;
 	if (m_keyArray[VK_ESCAPE])
 		PostQuitMessage(0);
-	if (VK_LSHIFT)
+	if (m_keyArray[VK_SHIFT])
 		m_toolInputCommands.leftShift = true;
 	else
 		m_toolInputCommands.leftShift = false;

@@ -69,8 +69,10 @@ int MFCMain::Run()
 		}
 		else
 		{	
-			int ID = m_ToolSystem.getCurrentSelectionID();
-			std::wstring statusString = L"Selected Object: " + std::to_wstring(ID);
+			//int ID = m_ToolSystem.getCurrentSelectionID();
+			std::vector<int> ID = m_ToolSystem.getCurrentSelectionIDs();
+			std::wstring statusString = L"Selected amount of Objects: " + std::to_wstring(ID.size());
+			//std::wstring statusString = L"shift bool is: " + std::to_wstring(m_ToolSystem.getBool());
 			m_ToolSystem.Tick(&msg);
 
 			//send current object ID to status bar in The main frame
