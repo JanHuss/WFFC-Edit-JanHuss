@@ -335,7 +335,9 @@ void ToolMain::UpdateInput(MSG * msg)
     case WM_MOUSEHOVER:
         DirectX::Mouse::ProcessMessage(msg->message, msg->wParam, msg->lParam);
         break;
-
+	case IDD_TRANSPORT:
+		//DialogBox(HINSTANCE, MAKEINTRESOURCE(IDD_TRANSPORT), HWND, Transport);
+		break;
 
 
 	}
