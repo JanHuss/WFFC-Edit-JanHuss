@@ -398,9 +398,4 @@ void ToolMain::UpdateInput(MSG * msg)
 		m_toolInputCommands.leftShift = true;
 	else
 		m_toolInputCommands.leftShift = false;
-	//POINT mousePos;
-	//GetCursorPos(&mousePos);
-	
-	
-	//WASD
 }
