@@ -23,15 +23,20 @@ BEGIN_MESSAGE_MAP(TransportControls, CDialogEx)
 END_MESSAGE_MAP()
 
 TransportControls::TransportControls(CWnd* pParent, std::vector<SceneObject>* SceneGraph) 
-	: CDialogEx(IDD_TRANSPORT, pParent)
+	: CDialogEx(IDD_TRANSPORT, pParent), m_sceneGraph(SceneGraph), index(0)
 {
-	m_sceneGraph = SceneGraph;
+	objectTranslateX = 0.0f;
+	objectTranslateY = 0.0f;
+	objectTranslateZ = 0.0f;
 
 }
 
 TransportControls::TransportControls(CWnd* pParent)
-	: CDialogEx(IDD_TRANSPORT, pParent)
+	: CDialogEx(IDD_TRANSPORT, pParent), m_sceneGraph(nullptr), index(0)
 {
+	objectTranslateX = 0.0f;
+	objectTranslateY = 0.0f;
+	objectTranslateZ = 0.0f;
 }
 
 TransportControls::~TransportControls()
@@ -44,6 +49,17 @@ void TransportControls::SetTransportDataToSelectedObject()
 
 void TransportControls::DoDataExchange(CDataExchange* pDX)
 {
+	CDialogEx::DoDataExchange(pDX);
+
+	// Binding edit controls to transport variables
+	DDX_Text(pDX, ID_TRANSLATE_X, objectTranslateX);
+	DDX_Text(pDX, ID_TRANSLATE_Y, objectTranslateY);
+	DDX_Text(pDX, ID_TRANSLATE_Z, objectTranslateZ);
+
+	// setting up min/max range for text boxes
+	DDV_MinMaxFloat(pDX, objectTranslateX, -500.0f, 500.0f);
+	DDV_MinMaxFloat(pDX, objectTranslateY, -500.0f, 500.0f);
+	DDV_MinMaxFloat(pDX, objectTranslateZ, -500.0f, 500.0f);
 
 }
 
@@ -61,26 +77,44 @@ BOOL TransportControls::OnInitDialog()
 {
 	CDialogEx::OnInitDialog();
 
-	SetDlgItemText(ID_TRANSLATE_X, _T("0.00"));
-    SetDlgItemText(ID_TRANSLATE_Y, _T("0.00"));
-    SetDlgItemText(ID_TRANSLATE_Z, _T("0.00"));
-    SetDlgItemText(ID_SCALE_X, _T("0.00"));
-    SetDlgItemText(ID_SCALE_Y, _T("0.00"));
-    SetDlgItemText(ID_SCALE_Z, _T("0.00"));
-    SetDlgItemText(ID_ROTATE_X, _T("0.00"));
-    SetDlgItemText(ID_ROTATE_Y, _T("0.00"));
-    SetDlgItemText(ID_ROTATE_Z, _T("0.00"));
+	if (m_sceneGraph && index >= 0 && index < m_sceneGraph->size())
+	{
+		SceneObject selectedObject = (*m_sceneGraph)[index];
+		objectTranslateX = selectedObject.posX;
+		objectTranslateY = selectedObject.posY;
+		objectTranslateZ = selectedObject.posZ;
+	}
+	else
+	{
+		objectTranslateX = 0.0f;
+		objectTranslateY = 0.0f;
+		objectTranslateZ = 0.0f;
+	}
+
+	UpdateData(FALSE);
 
 	return TRUE;
 }
 
 void TransportControls::PostNcDestroy()
 {
+	CDialogEx::PostNcDestroy();
 }
 
 void TransportControls::OnBnClickedOk()
 {
-	CDialogEx::OnOK();
+	if (UpdateData(TRUE))
+	{
+		 // Update the selected object's translate values.
+        if (m_sceneGraph != nullptr && index >= 0 && index < (int)m_sceneGraph->size())
+        {
+            (*m_sceneGraph)[index].posX = objectTranslateX;
+            (*m_sceneGraph)[index].posY = objectTranslateY;
+            (*m_sceneGraph)[index].posZ = objectTranslateZ;
+        }
+		CDialogEx::OnOK();
+	}
+
 }
 
 void TransportControls::OnBnClickedCancel()
@@ -92,31 +126,39 @@ void TransportControls::OnBnClickedCancel()
 // Transport Text Box
 void TransportControls::OnChangedTranslateX()
 {
-	// float value passed through as a parameter, changing the current objects 
-	// postion on the X axis
 	CString strText;
-    // Get the current text from the edit control.
     GetDlgItemText(ID_TRANSLATE_X, strText);
-
-    // Convert the CString to a numeric value.
-    // _tstof converts a CString to a double.
     double value = _tstof(strText);
+    objectTranslateX = (float)value;
 
-    // Assign the value to your existing variable.
-   	objectTranslateX = value;
-
-	CString strScale;
-    strScale.Format(_T("%.2f"), objectTranslateX);
-	// Update the Scale X text block.
-    SetDlgItemText(ID_SCALE_X, strScale);
+    // Optional: update the control with a formatted value.
+    CString strDisplay;
+    strDisplay.Format(_T("%.2f"), objectTranslateX);
+    SetDlgItemText(ID_TRANSLATE_X, strDisplay);
 }
 
 void TransportControls::OnChangedTranslateY()
 {
+	CString strText;
+    GetDlgItemText(ID_TRANSLATE_Y, strText);
+    double value = _tstof(strText);
+    objectTranslateY = (float)value;
+
+    CString strDisplay;
+    strDisplay.Format(_T("%.2f"), objectTranslateY);
+    SetDlgItemText(ID_TRANSLATE_Y, strDisplay);
 }
 
 void TransportControls::OnChangedTranslateZ()
 {
+	CString strText;
+    GetDlgItemText(ID_TRANSLATE_Z, strText);
+    double value = _tstof(strText);
+    objectTranslateZ = (float)value;
+
+    CString strDisplay;
+    strDisplay.Format(_T("%.2f"), objectTranslateZ);
+    SetDlgItemText(ID_TRANSLATE_Z, strDisplay);
 }
 
 void TransportControls::OnChangedScaleX()
@@ -155,12 +197,17 @@ void TransportControls::OnObjectSelect()
 
 void TransportControls::UpdateTransportOnSelect()
 {
-		objectTranslateX = m_sceneGraph->at(index).posX;
+	if (m_sceneGraph != nullptr && index >= 0 && index < (int)m_sceneGraph->size())
+    {
+        objectTranslateX = (*m_sceneGraph)[index].posX;
+        objectTranslateY = (*m_sceneGraph)[index].posY;
+        objectTranslateZ = (*m_sceneGraph)[index].posZ;
 
-		CString strTranslate;
-		strTranslate.Format(_T("%.2f"), objectTranslateX);
-		// Update the Scale X text block.
-		SetDlgItemText(ID_TRANSLATE_X, strTranslate);
+        CString strTranslate;
+        strTranslate.Format(_T("%.2f"), objectTranslateX);
+        SetDlgItemText(ID_TRANSLATE_X, strTranslate);
+
+    }
 }
 
 void TransportControls::UpdateIndexOnSelect(int i)
