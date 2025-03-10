@@ -39,6 +39,8 @@ private:
 	afx_msg void MenuEditTransport();
 	afx_msg	void ToolBarButton1();
 
+	void updateIndexOnSelect();
+
 
 	DECLARE_MESSAGE_MAP()	// required macro for message map functionality  One per class
 };

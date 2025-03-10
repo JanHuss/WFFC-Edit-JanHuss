@@ -3,11 +3,11 @@
 
 
 BEGIN_MESSAGE_MAP(MFCMain, CWinApp)
-	ON_COMMAND(ID_FILE_QUIT,	&MFCMain::MenuFileQuit)
+	ON_COMMAND(ID_FILE_QUIT, &MFCMain::MenuFileQuit)
 	ON_COMMAND(ID_FILE_SAVETERRAIN, &MFCMain::MenuFileSaveTerrain)
 	ON_COMMAND(ID_EDIT_SELECT, &MFCMain::MenuEditSelect)
 	ON_COMMAND(ID_EDIT_TRANSPORTCONTROLS, &MFCMain::MenuEditTransport)
-	ON_COMMAND(ID_BUTTON40001,	&MFCMain::ToolBarButton1)
+	ON_COMMAND(ID_BUTTON40001, &MFCMain::ToolBarButton1)
 	ON_UPDATE_COMMAND_UI(ID_INDICATOR_TOOL, &CMyFrame::OnUpdatePage)
 END_MESSAGE_MAP()
 
@@ -17,15 +17,15 @@ BOOL MFCMain::InitInstance()
 	m_frame = new CMyFrame();
 	m_pMainWnd = m_frame;
 
-	m_frame->Create(	NULL,
-					_T("World Of Flim-Flam Craft Editor"),
-					WS_OVERLAPPEDWINDOW,
-					CRect(100, 100, 1024, 768),
-					NULL,
-					NULL,
-					0,
-					NULL
-				);
+	m_frame->Create(NULL,
+		_T("World Of Flim-Flam Craft Editor"),
+		WS_OVERLAPPEDWINDOW,
+		CRect(100, 100, 1024, 768),
+		NULL,
+		NULL,
+		0,
+		NULL
+	);
 
 	//show and set the window to run and update. 
 	m_frame->ShowWindow(SW_SHOW);
@@ -35,8 +35,8 @@ BOOL MFCMain::InitInstance()
 	//get the rect from the MFC window so we can get its dimensions
 	m_toolHandle = m_frame->m_DirXView.GetSafeHwnd();				//handle of directX child window
 	m_frame->m_DirXView.GetClientRect(&WindowRECT);
-	m_width		= WindowRECT.Width();
-	m_height	= WindowRECT.Height();
+	m_width = WindowRECT.Width();
+	m_height = WindowRECT.Height();
 
 	m_ToolSystem.onActionInitialise(m_toolHandle, m_width, m_height);
 
@@ -69,7 +69,7 @@ int MFCMain::Run()
 			m_ToolSystem.UpdateInput(&msg);
 		}
 		else
-		{	
+		{
 			//int ID = m_ToolSystem.getCurrentSelectionID();
 			std::vector<int> ID = m_ToolSystem.getCurrentSelectionIDs();
 			std::wstring statusString = L"Selected amount of Objects: " + std::to_wstring(ID.size());
@@ -77,8 +77,9 @@ int MFCMain::Run()
 			m_ToolSystem.Tick(&msg);
 
 			//send current object ID to status bar in The main frame
-			m_frame->m_wndStatusBar.SetPaneText(1, statusString.c_str(), 1);	
+			m_frame->m_wndStatusBar.SetPaneText(1, statusString.c_str(), 1);
 		}
+		updateIndexOnSelect();
 	}
 
 	return (int)msg.wParam;
@@ -115,8 +116,18 @@ void MFCMain::MenuEditTransport()
 
 void MFCMain::ToolBarButton1()
 {
-	
+
 	m_ToolSystem.onActionSave();
+}
+
+void MFCMain::updateIndexOnSelect()
+{
+	if (m_TransportControls.GetSafeHwnd() != NULL)
+	{
+		// Update the internal index to match the new selection.
+		m_TransportControls.UpdateIndexOnSelect(m_ToolSystem.m_selectedObject);
+		m_TransportControls.UpdateTransportOnSelect();
+	}
 }
 
 

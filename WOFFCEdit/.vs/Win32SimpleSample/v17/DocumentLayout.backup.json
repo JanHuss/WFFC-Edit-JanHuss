@@ -3,20 +3,32 @@
   "WorkspaceRootPath": "D:\\De Daduck (Jan)\\Work\\Studies\\Year 4\\CMP405\\WFFC-Edit-JanHuss\\WOFFCEdit\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{DD0BCFE9-F760-43EB-9C31-BBFD23F397D9}|Win32SimpleSample.vcxproj|D:\\De Daduck (Jan)\\Work\\Studies\\Year 4\\CMP405\\WFFC-Edit-JanHuss\\WOFFCEdit\\Game.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
-      "RelativeMoniker": "D:0:0:{DD0BCFE9-F760-43EB-9C31-BBFD23F397D9}|Win32SimpleSample.vcxproj|solutionrelative:Game.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
-    },
-    {
       "AbsoluteMoniker": "D:0:0:{DD0BCFE9-F760-43EB-9C31-BBFD23F397D9}|Win32SimpleSample.vcxproj|D:\\De Daduck (Jan)\\Work\\Studies\\Year 4\\CMP405\\WFFC-Edit-JanHuss\\WOFFCEdit\\MFCMain.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
       "RelativeMoniker": "D:0:0:{DD0BCFE9-F760-43EB-9C31-BBFD23F397D9}|Win32SimpleSample.vcxproj|solutionrelative:MFCMain.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{DD0BCFE9-F760-43EB-9C31-BBFD23F397D9}|Win32SimpleSample.vcxproj|D:\\De Daduck (Jan)\\Work\\Studies\\Year 4\\CMP405\\WFFC-Edit-JanHuss\\WOFFCEdit\\ToolMain.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
-      "RelativeMoniker": "D:0:0:{DD0BCFE9-F760-43EB-9C31-BBFD23F397D9}|Win32SimpleSample.vcxproj|solutionrelative:ToolMain.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
+      "AbsoluteMoniker": "D:0:0:{DD0BCFE9-F760-43EB-9C31-BBFD23F397D9}|Win32SimpleSample.vcxproj|D:\\De Daduck (Jan)\\Work\\Studies\\Year 4\\CMP405\\WFFC-Edit-JanHuss\\WOFFCEdit\\MFCMain.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "RelativeMoniker": "D:0:0:{DD0BCFE9-F760-43EB-9C31-BBFD23F397D9}|Win32SimpleSample.vcxproj|solutionrelative:MFCMain.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{DD0BCFE9-F760-43EB-9C31-BBFD23F397D9}|Win32SimpleSample.vcxproj|D:\\De Daduck (Jan)\\Work\\Studies\\Year 4\\CMP405\\WFFC-Edit-JanHuss\\WOFFCEdit\\Game.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "RelativeMoniker": "D:0:0:{DD0BCFE9-F760-43EB-9C31-BBFD23F397D9}|Win32SimpleSample.vcxproj|solutionrelative:Game.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{DD0BCFE9-F760-43EB-9C31-BBFD23F397D9}|Win32SimpleSample.vcxproj|D:\\De Daduck (Jan)\\Work\\Studies\\Year 4\\CMP405\\WFFC-Edit-JanHuss\\WOFFCEdit\\Game.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "RelativeMoniker": "D:0:0:{DD0BCFE9-F760-43EB-9C31-BBFD23F397D9}|Win32SimpleSample.vcxproj|solutionrelative:Game.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{DD0BCFE9-F760-43EB-9C31-BBFD23F397D9}|Win32SimpleSample.vcxproj|D:\\De Daduck (Jan)\\Work\\Studies\\Year 4\\CMP405\\WFFC-Edit-JanHuss\\WOFFCEdit\\TransportControls.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
       "RelativeMoniker": "D:0:0:{DD0BCFE9-F760-43EB-9C31-BBFD23F397D9}|Win32SimpleSample.vcxproj|solutionrelative:TransportControls.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{DD0BCFE9-F760-43EB-9C31-BBFD23F397D9}|Win32SimpleSample.vcxproj|D:\\De Daduck (Jan)\\Work\\Studies\\Year 4\\CMP405\\WFFC-Edit-JanHuss\\WOFFCEdit\\TransportControls.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "RelativeMoniker": "D:0:0:{DD0BCFE9-F760-43EB-9C31-BBFD23F397D9}|Win32SimpleSample.vcxproj|solutionrelative:TransportControls.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{DD0BCFE9-F760-43EB-9C31-BBFD23F397D9}|Win32SimpleSample.vcxproj|D:\\De Daduck (Jan)\\Work\\Studies\\Year 4\\CMP405\\WFFC-Edit-JanHuss\\WOFFCEdit\\ToolMain.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "RelativeMoniker": "D:0:0:{DD0BCFE9-F760-43EB-9C31-BBFD23F397D9}|Win32SimpleSample.vcxproj|solutionrelative:ToolMain.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{DD0BCFE9-F760-43EB-9C31-BBFD23F397D9}|Win32SimpleSample.vcxproj|D:\\De Daduck (Jan)\\Work\\Studies\\Year 4\\CMP405\\WFFC-Edit-JanHuss\\WOFFCEdit\\ToolMain.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
@@ -30,7 +42,7 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 1,
+          "SelectedChildIndex": 8,
           "Children": [
             {
               "$type": "Bookmark",
@@ -38,33 +50,33 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 0,
+              "DocumentIndex": 2,
+              "Title": "Game.h",
+              "DocumentMoniker": "D:\\De Daduck (Jan)\\Work\\Studies\\Year 4\\CMP405\\WFFC-Edit-JanHuss\\WOFFCEdit\\Game.h",
+              "RelativeDocumentMoniker": "Game.h",
+              "ToolTip": "D:\\De Daduck (Jan)\\Work\\Studies\\Year 4\\CMP405\\WFFC-Edit-JanHuss\\WOFFCEdit\\Game.h",
+              "RelativeToolTip": "Game.h",
+              "ViewState": "AgIAAAwAAAAAAAAAAAAAADcAAAANAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000680|",
+              "WhenOpened": "2025-03-10T16:27:43.482Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
               "Title": "Game.cpp",
               "DocumentMoniker": "D:\\De Daduck (Jan)\\Work\\Studies\\Year 4\\CMP405\\WFFC-Edit-JanHuss\\WOFFCEdit\\Game.cpp",
               "RelativeDocumentMoniker": "Game.cpp",
-              "ToolTip": "D:\\De Daduck (Jan)\\Work\\Studies\\Year 4\\CMP405\\WFFC-Edit-JanHuss\\WOFFCEdit\\Game.cpp*",
-              "RelativeToolTip": "Game.cpp*",
-              "ViewState": "AgIAAPEAAAAAAAAAAAAswBIBAACsAAAAAAAAAA==",
+              "ToolTip": "D:\\De Daduck (Jan)\\Work\\Studies\\Year 4\\CMP405\\WFFC-Edit-JanHuss\\WOFFCEdit\\Game.cpp",
+              "RelativeToolTip": "Game.cpp",
+              "ViewState": "AgIAAKQAAAAAAAAAAAAAABIBAACsAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000677|",
               "WhenOpened": "2025-03-10T13:18:55.665Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 1,
-              "Title": "MFCMain.cpp",
-              "DocumentMoniker": "D:\\De Daduck (Jan)\\Work\\Studies\\Year 4\\CMP405\\WFFC-Edit-JanHuss\\WOFFCEdit\\MFCMain.cpp",
-              "RelativeDocumentMoniker": "MFCMain.cpp",
-              "ToolTip": "D:\\De Daduck (Jan)\\Work\\Studies\\Year 4\\CMP405\\WFFC-Edit-JanHuss\\WOFFCEdit\\MFCMain.cpp",
-              "RelativeToolTip": "MFCMain.cpp",
-              "ViewState": "AgIAACQAAAAAAAAAAAAAAGsAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000677|",
-              "WhenOpened": "2025-03-10T13:16:49.402Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 4,
+              "DocumentIndex": 7,
               "Title": "ToolMain.h",
               "DocumentMoniker": "D:\\De Daduck (Jan)\\Work\\Studies\\Year 4\\CMP405\\WFFC-Edit-JanHuss\\WOFFCEdit\\ToolMain.h",
               "RelativeDocumentMoniker": "ToolMain.h",
@@ -77,28 +89,67 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 3,
+              "DocumentIndex": 5,
+              "Title": "TransportControls.h",
+              "DocumentMoniker": "D:\\De Daduck (Jan)\\Work\\Studies\\Year 4\\CMP405\\WFFC-Edit-JanHuss\\WOFFCEdit\\TransportControls.h",
+              "RelativeDocumentMoniker": "TransportControls.h",
+              "ToolTip": "D:\\De Daduck (Jan)\\Work\\Studies\\Year 4\\CMP405\\WFFC-Edit-JanHuss\\WOFFCEdit\\TransportControls.h",
+              "RelativeToolTip": "TransportControls.h",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABAAAAATAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000680|",
+              "WhenOpened": "2025-03-10T16:11:31.86Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
               "Title": "TransportControls.cpp",
               "DocumentMoniker": "D:\\De Daduck (Jan)\\Work\\Studies\\Year 4\\CMP405\\WFFC-Edit-JanHuss\\WOFFCEdit\\TransportControls.cpp",
               "RelativeDocumentMoniker": "TransportControls.cpp",
               "ToolTip": "D:\\De Daduck (Jan)\\Work\\Studies\\Year 4\\CMP405\\WFFC-Edit-JanHuss\\WOFFCEdit\\TransportControls.cpp",
               "RelativeToolTip": "TransportControls.cpp",
-              "ViewState": "AgIAAF0AAAAAAAAAAAAAAD0AAAABAAAAAAAAAA==",
+              "ViewState": "AgIAAEIAAAAAAAAAAAAAAFkAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000677|",
               "WhenOpened": "2025-03-10T13:13:25.272Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 2,
+              "DocumentIndex": 6,
               "Title": "ToolMain.cpp",
               "DocumentMoniker": "D:\\De Daduck (Jan)\\Work\\Studies\\Year 4\\CMP405\\WFFC-Edit-JanHuss\\WOFFCEdit\\ToolMain.cpp",
               "RelativeDocumentMoniker": "ToolMain.cpp",
               "ToolTip": "D:\\De Daduck (Jan)\\Work\\Studies\\Year 4\\CMP405\\WFFC-Edit-JanHuss\\WOFFCEdit\\ToolMain.cpp",
               "RelativeToolTip": "ToolMain.cpp",
-              "ViewState": "AgIAAAkAAAAAAAAAAAAowGQAAAANAAAAAAAAAA==",
+              "ViewState": "AgIAAEUAAAAAAAAAAAAAAGQAAAANAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000677|",
               "WhenOpened": "2025-03-10T13:13:25.274Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "MFCMain.h",
+              "DocumentMoniker": "D:\\De Daduck (Jan)\\Work\\Studies\\Year 4\\CMP405\\WFFC-Edit-JanHuss\\WOFFCEdit\\MFCMain.h",
+              "RelativeDocumentMoniker": "MFCMain.h",
+              "ToolTip": "D:\\De Daduck (Jan)\\Work\\Studies\\Year 4\\CMP405\\WFFC-Edit-JanHuss\\WOFFCEdit\\MFCMain.h",
+              "RelativeToolTip": "MFCMain.h",
+              "ViewState": "AgIAAAwAAAAAAAAAAAAAABQAAAAJAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000680|",
+              "WhenOpened": "2025-03-10T16:12:29.551Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "MFCMain.cpp",
+              "DocumentMoniker": "D:\\De Daduck (Jan)\\Work\\Studies\\Year 4\\CMP405\\WFFC-Edit-JanHuss\\WOFFCEdit\\MFCMain.cpp",
+              "RelativeDocumentMoniker": "MFCMain.cpp",
+              "ToolTip": "D:\\De Daduck (Jan)\\Work\\Studies\\Year 4\\CMP405\\WFFC-Edit-JanHuss\\WOFFCEdit\\MFCMain.cpp*",
+              "RelativeToolTip": "MFCMain.cpp*",
+              "ViewState": "AgIAACwAAAAAAAAAAAAswFEAAAAYAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000677|",
+              "WhenOpened": "2025-03-10T13:16:49.402Z",
               "EditorCaption": ""
             }
           ]
