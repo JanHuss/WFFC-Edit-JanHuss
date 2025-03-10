@@ -289,6 +289,13 @@ void TransportControls::UpdateTransportOnSelect()
         objectTranslateX = (*m_sceneGraph)[index].posX;
         objectTranslateY = (*m_sceneGraph)[index].posY;
         objectTranslateZ = (*m_sceneGraph)[index].posZ;
+		objectScaleX = (*m_sceneGraph)[index].scaX;
+        objectScaleY = (*m_sceneGraph)[index].scaY;
+        objectScaleZ = (*m_sceneGraph)[index].scaZ;
+		objectRotateX = (*m_sceneGraph)[index].rotX;
+        objectRotateY = (*m_sceneGraph)[index].rotY;
+        objectRotateZ = (*m_sceneGraph)[index].rotZ;
+
 
 		UpdateData(FALSE);
 
