@@ -24,6 +24,12 @@ public:
 	float objectTranslateX;
 	float objectTranslateY;
 	float objectTranslateZ;
+	float objectScaleX;
+	float objectScaleY;
+	float objectScaleZ;
+	float objectRotateX;
+	float objectRotateY;
+	float objectRotateZ;
 
 	void SetTransportDataToSelectedObject();
 

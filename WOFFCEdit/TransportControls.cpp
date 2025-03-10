@@ -29,6 +29,12 @@ TransportControls::TransportControls(CWnd* pParent, std::vector<SceneObject>* Sc
 	objectTranslateX = 0.0f;
 	objectTranslateY = 0.0f;
 	objectTranslateZ = 0.0f;
+	objectScaleX = 0.0f;
+	objectScaleY = 0.0f;
+	objectScaleZ = 0.0f;
+	objectRotateX = 0.0f;
+	objectRotateY = 0.0f;
+	objectRotateZ = 0.0f;
 
 }
 
@@ -38,6 +44,12 @@ TransportControls::TransportControls(CWnd* pParent)
 	objectTranslateX = 0.0f;
 	objectTranslateY = 0.0f;
 	objectTranslateZ = 0.0f;
+	objectScaleX = 0.0f;
+	objectScaleY = 0.0f;
+	objectScaleZ = 0.0f;
+	objectRotateX = 0.0f;
+	objectRotateY = 0.0f;
+	objectRotateZ = 0.0f;
 }
 
 TransportControls::~TransportControls()
@@ -66,6 +78,12 @@ void TransportControls::DoDataExchange(CDataExchange* pDX)
 	DDX_Text(pDX, ID_TRANSLATE_X, objectTranslateX);
 	DDX_Text(pDX, ID_TRANSLATE_Y, objectTranslateY);
 	DDX_Text(pDX, ID_TRANSLATE_Z, objectTranslateZ);
+	DDX_Text(pDX, ID_SCALE_X, objectScaleX);
+	DDX_Text(pDX, ID_SCALE_Y, objectScaleY);
+	DDX_Text(pDX, ID_SCALE_Z, objectScaleZ);
+	DDX_Text(pDX, ID_ROTATE_X, objectRotateX);
+	DDX_Text(pDX, ID_ROTATE_Y, objectRotateY);
+	DDX_Text(pDX, ID_ROTATE_Z, objectRotateZ);
 
 	// setting up min/max range for text boxes
 	DDV_MinMaxFloat(pDX, objectTranslateX, -500.0f, 500.0f);
@@ -94,12 +112,24 @@ BOOL TransportControls::OnInitDialog()
 		objectTranslateX = selectedObject.posX;
 		objectTranslateY = selectedObject.posY;
 		objectTranslateZ = selectedObject.posZ;
+		objectScaleX = selectedObject.scaX;
+		objectScaleY = selectedObject.scaY;
+		objectScaleZ = selectedObject.scaZ;
+		objectRotateX = selectedObject.rotX;
+		objectRotateY = selectedObject.rotY;
+		objectRotateZ = selectedObject.rotZ;
 	}
 	else
 	{
 		objectTranslateX = 0.0f;
 		objectTranslateY = 0.0f;
 		objectTranslateZ = 0.0f;
+		objectScaleX = 0.0f;
+		objectScaleY = 0.0f;
+		objectScaleZ = 0.0f;
+		objectRotateX = 0.0f;
+		objectRotateY = 0.0f;
+		objectRotateZ = 0.0f;
 	}
 
 	UpdateData(FALSE);
@@ -125,6 +155,12 @@ void TransportControls::OnBnClickedOk()
             (*m_sceneGraph)[index].posX = objectTranslateX;
             (*m_sceneGraph)[index].posY = objectTranslateY;
             (*m_sceneGraph)[index].posZ = objectTranslateZ;
+			(*m_sceneGraph)[index].scaX = objectScaleX;
+            (*m_sceneGraph)[index].scaY = objectScaleY;
+            (*m_sceneGraph)[index].scaZ = objectScaleZ;
+			(*m_sceneGraph)[index].rotX = objectRotateX;
+            (*m_sceneGraph)[index].rotY = objectRotateY;
+            (*m_sceneGraph)[index].rotZ = objectRotateZ;
         }
 		CDialogEx::OnOK();
 	}
@@ -190,26 +226,50 @@ void TransportControls::OnChangedTranslateZ()
 
 void TransportControls::OnChangedScaleX()
 {
+	CString strText;
+    GetDlgItemText(ID_SCALE_X, strText);
+    double value = _tstof(strText);
+    objectScaleX = (float)value;
 }
 
 void TransportControls::OnChangedScaleY()
 {
+	CString strText;
+    GetDlgItemText(ID_SCALE_Y, strText);
+    double value = _tstof(strText);
+    objectScaleY = (float)value;
 }
 
 void TransportControls::OnChangedScaleZ()
 {
+	CString strText;
+    GetDlgItemText(ID_SCALE_Z, strText);
+    double value = _tstof(strText);
+    objectScaleZ = (float)value;
 }
 
 void TransportControls::OnChangedRotateX()
 {
+	CString strText;
+    GetDlgItemText(ID_ROTATE_X, strText);
+    double value = _tstof(strText);
+    objectRotateX = (float)value;
 }
 
 void TransportControls::OnChangedRotateY()
 {
+	CString strText;
+    GetDlgItemText(ID_ROTATE_Y, strText);
+    double value = _tstof(strText);
+    objectRotateY = (float)value;
 }
 
 void TransportControls::OnChangedRotateZ()
 {
+	CString strText;
+    GetDlgItemText(ID_ROTATE_Z, strText);
+    double value = _tstof(strText);
+    objectRotateZ= (float)value;
 }
 
 void TransportControls::OnObjectSelect()
