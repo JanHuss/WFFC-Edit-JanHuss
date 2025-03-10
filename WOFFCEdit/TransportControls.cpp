@@ -9,6 +9,7 @@ BEGIN_MESSAGE_MAP(TransportControls, CDialogEx)
 	ON_BN_CLICKED(IDOK, &TransportControls::OnBnClickedOk)	
 	ON_COMMAND(IDCANCEL, &TransportControls::End)
 	ON_BN_CLICKED(IDCANCEL, &TransportControls::OnBnClickedCancel)
+	ON_BN_CLICKED(IDAPPLY, &TransportControls::OnBnClickedApply)
 	ON_EN_CHANGE(ID_TRANSLATE_X, &TransportControls::OnChangedTranslateX)
 	ON_EN_CHANGE(ID_TRANSLATE_Y, &TransportControls::OnChangedTranslateY)
 	ON_EN_CHANGE(ID_TRANSLATE_Z, &TransportControls::OnChangedTranslateZ)
@@ -41,6 +42,16 @@ TransportControls::TransportControls(CWnd* pParent)
 
 TransportControls::~TransportControls()
 {
+}
+
+void TransportControls::SetObjectData(std::vector<SceneObject>* SceneGraph, int* selection)
+{
+	m_sceneGraph = SceneGraph;
+	m_currentSelection = selection;
+
+	if(m_currentSelection)
+		UpdateIndexOnSelect(*m_currentSelection);
+
 }
 
 void TransportControls::SetTransportDataToSelectedObject()
@@ -98,11 +109,14 @@ BOOL TransportControls::OnInitDialog()
 
 void TransportControls::PostNcDestroy()
 {
+	// set m_transportControlsActive = false; here
 	CDialogEx::PostNcDestroy();
 }
 
 void TransportControls::OnBnClickedOk()
 {
+	//GetDlgItem(ID_TRANSLATE_X)->SetFocus();
+
 	if (UpdateData(TRUE))
 	{
 		 // Update the selected object's translate values.
@@ -122,6 +136,20 @@ void TransportControls::OnBnClickedCancel()
 	CDialogEx::OnCancel();
 }
 
+void TransportControls::OnBnClickedApply()
+{
+	//if (UpdateData(TRUE))
+	//{
+	// // Update the selected object's translate values.
+    //    if (m_sceneGraph != nullptr && index >= 0 && index < (int)m_sceneGraph->size())
+    //    {
+    //        (*m_sceneGraph)[index].posX = objectTranslateX;
+    //        (*m_sceneGraph)[index].posY = objectTranslateY;
+    //        (*m_sceneGraph)[index].posZ = objectTranslateZ;
+    //    }
+	//}
+}
+
 
 // Transport Text Box
 void TransportControls::OnChangedTranslateX()
@@ -131,10 +159,9 @@ void TransportControls::OnChangedTranslateX()
     double value = _tstof(strText);
     objectTranslateX = (float)value;
 
-    // Optional: update the control with a formatted value.
-    CString strDisplay;
-    strDisplay.Format(_T("%.2f"), objectTranslateX);
-    SetDlgItemText(ID_TRANSLATE_X, strDisplay);
+   //CString strDisplay;
+   //strDisplay.Format(_T("%.2f"), objectTranslateX);
+   //SetDlgItemText(ID_TRANSLATE_X, strDisplay);
 }
 
 void TransportControls::OnChangedTranslateY()
@@ -144,9 +171,9 @@ void TransportControls::OnChangedTranslateY()
     double value = _tstof(strText);
     objectTranslateY = (float)value;
 
-    CString strDisplay;
-    strDisplay.Format(_T("%.2f"), objectTranslateY);
-    SetDlgItemText(ID_TRANSLATE_Y, strDisplay);
+  //CString strDisplay;
+  //strDisplay.Format(_T("%.2f"), objectTranslateY);
+  //SetDlgItemText(ID_TRANSLATE_Y, strDisplay);
 }
 
 void TransportControls::OnChangedTranslateZ()
@@ -156,9 +183,9 @@ void TransportControls::OnChangedTranslateZ()
     double value = _tstof(strText);
     objectTranslateZ = (float)value;
 
-    CString strDisplay;
-    strDisplay.Format(_T("%.2f"), objectTranslateZ);
-    SetDlgItemText(ID_TRANSLATE_Z, strDisplay);
+    //CString strDisplay;
+    //strDisplay.Format(_T("%.2f"), objectTranslateZ);
+    //SetDlgItemText(ID_TRANSLATE_Z, strDisplay);
 }
 
 void TransportControls::OnChangedScaleX()
@@ -203,9 +230,11 @@ void TransportControls::UpdateTransportOnSelect()
         objectTranslateY = (*m_sceneGraph)[index].posY;
         objectTranslateZ = (*m_sceneGraph)[index].posZ;
 
-        CString strTranslate;
-        strTranslate.Format(_T("%.2f"), objectTranslateX);
-        SetDlgItemText(ID_TRANSLATE_X, strTranslate);
+		UpdateData(FALSE);
+
+        //CString strTranslate;
+        //strTranslate.Format(_T("%.2f"), objectTranslateX);
+        //SetDlgItemText(ID_TRANSLATE_X, strTranslate);
 
     }
 }

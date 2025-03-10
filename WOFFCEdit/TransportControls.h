@@ -14,6 +14,7 @@ public:
 	TransportControls(CWnd* pParent, std::vector<SceneObject>* SceneGraph);   // modal // takes in out scenegraph in the constructor
 	TransportControls(CWnd* pParent = NULL);
 	virtual ~TransportControls();
+	void SetObjectData(std::vector<SceneObject>* SceneGraph, int * Selection);	//passing in pointers to the data the class will operate on.
 
 	// Dialog Data
 #ifdef AFX_DESIGN_TIME
@@ -40,6 +41,7 @@ public:
 	
 	afx_msg void OnBnClickedOk();
 	afx_msg void OnBnClickedCancel();
+	afx_msg void OnBnClickedApply();
 	
 	afx_msg void OnChangedTranslateX();
 	afx_msg void OnChangedTranslateY();

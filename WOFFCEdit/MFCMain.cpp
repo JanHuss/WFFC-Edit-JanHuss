@@ -110,6 +110,7 @@ void MFCMain::MenuEditTransport()
 {
 	m_TransportControls.Create(IDD_TRANSPORT);	//Start up modeless
 	m_TransportControls.ShowWindow(SW_SHOW);	//show modeless
+	m_TransportControls.SetObjectData(&m_ToolSystem.m_sceneGraph, &m_ToolSystem.m_selectedObject);
 }
 
 void MFCMain::ToolBarButton1()

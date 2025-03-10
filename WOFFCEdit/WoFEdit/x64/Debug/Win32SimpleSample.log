@@ -1,0 +1,23 @@
+﻿  Game.cpp
+D:\De Daduck (Jan)\Work\Studies\Year 4\CMP405\WFFC-Edit-JanHuss\WOFFCEdit\Game.cpp(29,16): warning C4305: '=': truncation from 'double' to 'float'
+D:\De Daduck (Jan)\Work\Studies\Year 4\CMP405\WFFC-Edit-JanHuss\WOFFCEdit\Game.cpp(243,23): warning C4267: 'initializing': conversion from 'size_t' to 'int', possible loss of data
+D:\De Daduck (Jan)\Work\Studies\Year 4\CMP405\WFFC-Edit-JanHuss\WOFFCEdit\Game.cpp(253,57): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
+D:\De Daduck (Jan)\Work\Studies\Year 4\CMP405\WFFC-Edit-JanHuss\WOFFCEdit\Game.cpp(252,57): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
+D:\De Daduck (Jan)\Work\Studies\Year 4\CMP405\WFFC-Edit-JanHuss\WOFFCEdit\Game.cpp(251,97): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
+D:\De Daduck (Jan)\Work\Studies\Year 4\CMP405\WFFC-Edit-JanHuss\WOFFCEdit\Game.cpp(274,10): warning C4101: 'Buffer': unreferenced local variable
+D:\De Daduck (Jan)\Work\Studies\Year 4\CMP405\WFFC-Edit-JanHuss\WOFFCEdit\Game.cpp(396,17): warning C4267: 'initializing': conversion from 'size_t' to 'int', possible loss of data
+D:\De Daduck (Jan)\Work\Studies\Year 4\CMP405\WFFC-Edit-JanHuss\WOFFCEdit\Game.cpp(517,36): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+D:\De Daduck (Jan)\Work\Studies\Year 4\CMP405\WFFC-Edit-JanHuss\WOFFCEdit\Game.cpp(518,28): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+D:\De Daduck (Jan)\Work\Studies\Year 4\CMP405\WFFC-Edit-JanHuss\WOFFCEdit\Game.cpp(519,36): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+D:\De Daduck (Jan)\Work\Studies\Year 4\CMP405\WFFC-Edit-JanHuss\WOFFCEdit\Game.cpp(616,14): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+D:\De Daduck (Jan)\Work\Studies\Year 4\CMP405\WFFC-Edit-JanHuss\WOFFCEdit\Game.cpp(615,53): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+D:\De Daduck (Jan)\Work\Studies\Year 4\CMP405\WFFC-Edit-JanHuss\WOFFCEdit\Game.cpp(619,14): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+D:\De Daduck (Jan)\Work\Studies\Year 4\CMP405\WFFC-Edit-JanHuss\WOFFCEdit\Game.cpp(618,52): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+D:\De Daduck (Jan)\Work\Studies\Year 4\CMP405\WFFC-Edit-JanHuss\WOFFCEdit\Game.cpp(634,47): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
+D:\De Daduck (Jan)\Work\Studies\Year 4\CMP405\WFFC-Edit-JanHuss\WOFFCEdit\Game.cpp(633,47): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
+D:\De Daduck (Jan)\Work\Studies\Year 4\CMP405\WFFC-Edit-JanHuss\WOFFCEdit\Game.cpp(632,47): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
+D:\De Daduck (Jan)\Work\Studies\Year 4\CMP405\WFFC-Edit-JanHuss\WOFFCEdit\Game.cpp(649,23): warning C4244: 'argument': conversion from 'LONG' to 'float', possible loss of data
+D:\De Daduck (Jan)\Work\Studies\Year 4\CMP405\WFFC-Edit-JanHuss\WOFFCEdit\Game.cpp(648,23): warning C4244: 'argument': conversion from 'LONG' to 'float', possible loss of data
+D:\De Daduck (Jan)\Work\Studies\Year 4\CMP405\WFFC-Edit-JanHuss\WOFFCEdit\Game.cpp(659,23): warning C4244: 'argument': conversion from 'LONG' to 'float', possible loss of data
+D:\De Daduck (Jan)\Work\Studies\Year 4\CMP405\WFFC-Edit-JanHuss\WOFFCEdit\Game.cpp(658,23): warning C4244: 'argument': conversion from 'LONG' to 'float', possible loss of data
+  Win32SimpleSample.vcxproj -> D:\De Daduck (Jan)\Work\Studies\Year 4\CMP405\WFFC-Edit-JanHuss\WOFFCEdit\x64\Debug\WoFEdit.exe
