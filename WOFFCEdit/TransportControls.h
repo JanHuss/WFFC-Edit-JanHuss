@@ -60,7 +60,8 @@ public:
 	afx_msg void Select();	//Item has been selected
 
 	bool onEndFunctionCall = false;
-
+	//bool onIsApplied = false;
+	bool _openedWithCmd = false;
 
 	public:
 	// Control variable for more efficient access of the listbox

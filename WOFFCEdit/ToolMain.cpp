@@ -373,10 +373,16 @@ void ToolMain::UpdateInput(MSG * msg)
 		m_toolInputCommands.down = true;
 	else
 		m_toolInputCommands.down = false;
+	// launch transport controls
 	if (m_keyArray[VK_CONTROL] && m_keyArray['T'])
 		m_toolInputCommands.openTransport = true;
 	else
 		m_toolInputCommands.openTransport = false;
+	// undo
+	if (m_keyArray[VK_CONTROL] && m_keyArray['Z'])
+		m_toolInputCommands.undo = true;
+	else
+		m_toolInputCommands.undo = false;
 	//rotation
 	if (m_keyArray['E'])
 	{

@@ -97,6 +97,7 @@ void TransportControls::End()
 {
 	// set flag here to tell that mouse picking is allowed
 	onEndFunctionCall = true;
+	_openedWithCmd = false;
 	DestroyWindow();
 }
 
@@ -197,6 +198,7 @@ void TransportControls::OnBnClickedApply()
 			(*m_sceneGraph)[index].rotZ = objectRotateZ;
         }
 	}
+	onEndFunctionCall = true;
 }
 
 

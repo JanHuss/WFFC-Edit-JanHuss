@@ -50,8 +50,8 @@ Game::Game()
 	m_camRight.y = 0.0f;
 	m_camRight.z = 0.0f;
 
-	m_camOrientation.x = -30.0f;
-	m_camOrientation.y = -31.0f;
+	m_camOrientation.x = -18.0f;
+	m_camOrientation.y = -32.0f;
 	m_camOrientation.z = 0.0f;
 
 }

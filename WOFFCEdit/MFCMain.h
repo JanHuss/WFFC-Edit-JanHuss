@@ -32,7 +32,7 @@ private:
 	int m_width;		
 	int m_height;
 
-	bool _sceneGraphUpToDate = false;
+	
 	
 	//Interface funtions for menu and toolbar etc requires
 	afx_msg void MenuFileQuit();

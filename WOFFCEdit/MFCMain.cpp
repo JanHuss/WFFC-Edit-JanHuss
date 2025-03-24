@@ -86,6 +86,12 @@ int MFCMain::Run()
 			m_ToolSystem.m_d3dRenderer.setDialogBoxOpen(false);
 			m_ToolSystem.m_d3dRenderer.BuildDisplayList(m_TransportControls.m_sceneGraph);
 		}
+		// keyboard command transport controls
+		if (m_ToolSystem.m_toolInputCommands.openTransport == true && m_TransportControls._openedWithCmd == false)
+		{
+			m_TransportControls._openedWithCmd = true;
+			MenuEditTransport();
+		}
 			
 
 	}
@@ -122,6 +128,7 @@ void MFCMain::MenuEditTransport()
 	m_TransportControls.SetObjectData(&m_ToolSystem.m_sceneGraph, &m_ToolSystem.m_selectedObject);
 	updateIndexOnSelect();
 	m_TransportControls.onEndFunctionCall = false;
+	//m_TransportControls._openedWithCmd = false;
 	m_ToolSystem.m_d3dRenderer.setDialogBoxOpen(true);
 }
 
