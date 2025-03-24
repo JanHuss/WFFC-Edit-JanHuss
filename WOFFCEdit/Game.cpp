@@ -134,7 +134,6 @@ void Game::Tick(InputCommands *Input)
 
 	if (currentMouseState.leftButton && !previousMouseState.leftButton)
 	{
-		// if dialogbox is not open
 		int pickedID = MousePicking();
 
 		bool multiSelectEnabled = currentKeyboard.LeftShift;
@@ -152,6 +151,7 @@ void Game::Tick(InputCommands *Input)
 			m_selectedObjects.clear();
 			if (pickedID != -1)
 				m_selectedObjects.push_back(pickedID);
+			
 		}
 		if (m_selectedObject == pickedID)
 			m_selectedObject = -1;
@@ -254,6 +254,27 @@ void Game::Render()
 															m_displayList[i].m_orientation.z *3.1415 / 180);
 
 		XMMATRIX local = m_world * XMMatrixTransformation(g_XMZero, Quaternion::Identity, scale, g_XMZero, rotate, translate);
+
+
+		if (i == m_selectedObject)
+		{
+			m_displayList[i].m_model->UpdateEffects(
+				[&](IEffect* effect) {
+					auto basicEffect = dynamic_cast<BasicEffect*>(effect);
+
+					basicEffect->SetDiffuseColor(DirectX::XMVectorSet(1.0f, 0.0f, 0.0f, 0.0f));
+					
+				});
+		}
+		else
+		{
+			m_displayList[i].m_model->UpdateEffects(
+				[&](IEffect* effect) {
+					auto basicEffect = dynamic_cast<BasicEffect*>(effect);
+
+					basicEffect->SetDiffuseColor(DirectX::XMVectorSet(1.0f, 1.0f, 1.0f, 1.0f));
+				});
+		}
 
 		m_displayList[i].m_model->Draw(context, *m_states, local, m_view, m_projection, false);	//last variable in draw,  make TRUE for wireframe
 
