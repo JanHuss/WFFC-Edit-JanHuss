@@ -255,24 +255,18 @@ void Game::Render()
 
 		XMMATRIX local = m_world * XMMatrixTransformation(g_XMZero, Quaternion::Identity, scale, g_XMZero, rotate, translate);
 
-
-		if (i == m_selectedObject)
+		for (int i = 0; i < m_displayList.size(); i++)
 		{
-			m_displayList[i].m_model->UpdateEffects(
-				[&](IEffect* effect) {
-					auto basicEffect = dynamic_cast<BasicEffect*>(effect);
+			bool isSelected = (std::find(m_selectedObjects.begin(), m_selectedObjects.end(), i) != m_selectedObjects.end());
 
-					basicEffect->SetDiffuseColor(DirectX::XMVectorSet(1.0f, 0.0f, 0.0f, 0.0f));
-					
-				});
-		}
-		else
-		{
-			m_displayList[i].m_model->UpdateEffects(
-				[&](IEffect* effect) {
-					auto basicEffect = dynamic_cast<BasicEffect*>(effect);
-
-					basicEffect->SetDiffuseColor(DirectX::XMVectorSet(1.0f, 1.0f, 1.0f, 1.0f));
+			m_displayList[i].m_model->UpdateEffects([&, i](IEffect* effect) {
+				if (auto basicEffect = dynamic_cast<BasicEffect*>(effect))
+				{
+					if (isSelected)
+						basicEffect->SetDiffuseColor(DirectX::XMVectorSet(1.0f, 0.0f, 0.0f, 0.0f)); // Red tint for selected.
+					else
+						basicEffect->SetDiffuseColor(DirectX::XMVectorSet(1.0f, 1.0f, 1.0f, 1.0f)); // Default color.
+				}
 				});
 		}
 
