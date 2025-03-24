@@ -15,4 +15,5 @@ struct InputCommands
 	bool rotDown;
 
 	bool leftShift;
+	bool openTransport;
 };

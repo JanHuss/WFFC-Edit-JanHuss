@@ -81,7 +81,12 @@ int MFCMain::Run()
 		}
 		// if dialog box end is true then set the dialog box to false
 		if (m_TransportControls.onEndFunctionCall)
+		{
+			m_TransportControls.onEndFunctionCall = false;
 			m_ToolSystem.m_d3dRenderer.setDialogBoxOpen(false);
+			m_ToolSystem.m_d3dRenderer.BuildDisplayList(m_TransportControls.m_sceneGraph);
+		}
+			
 
 	}
 

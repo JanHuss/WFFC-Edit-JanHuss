@@ -74,11 +74,11 @@ public:
 	afx_msg void OnChangedRotateY();
 	afx_msg void OnChangedRotateZ();
 
-	
+	std::vector<SceneObject> * m_sceneGraph;
 
 private:
 
-	std::vector<SceneObject> * m_sceneGraph;
+
 	int * m_currentSelection;
 	int index;
 };

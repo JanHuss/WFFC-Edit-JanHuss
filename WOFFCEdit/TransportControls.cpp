@@ -158,9 +158,11 @@ void TransportControls::OnBnClickedOk()
             (*m_sceneGraph)[index].posX = objectTranslateX;
             (*m_sceneGraph)[index].posY = objectTranslateY;
             (*m_sceneGraph)[index].posZ = objectTranslateZ;
+
 			(*m_sceneGraph)[index].scaX = objectScaleX;
             (*m_sceneGraph)[index].scaY = objectScaleY;
             (*m_sceneGraph)[index].scaZ = objectScaleZ;
+
 			(*m_sceneGraph)[index].rotX = objectRotateX;
             (*m_sceneGraph)[index].rotY = objectRotateY;
             (*m_sceneGraph)[index].rotZ = objectRotateZ;
@@ -185,6 +187,14 @@ void TransportControls::OnBnClickedApply()
             (*m_sceneGraph)[index].posX = objectTranslateX;
             (*m_sceneGraph)[index].posY = objectTranslateY;
             (*m_sceneGraph)[index].posZ = objectTranslateZ;
+
+			(*m_sceneGraph)[index].scaX = objectScaleX;
+			(*m_sceneGraph)[index].scaY = objectScaleY;
+			(*m_sceneGraph)[index].scaZ = objectScaleZ;
+
+			(*m_sceneGraph)[index].rotX = objectRotateX;
+			(*m_sceneGraph)[index].rotY = objectRotateY;
+			(*m_sceneGraph)[index].rotZ = objectRotateZ;
         }
 	}
 }

@@ -31,6 +31,8 @@ private:
 
 	int m_width;		
 	int m_height;
+
+	bool _sceneGraphUpToDate = false;
 	
 	//Interface funtions for menu and toolbar etc requires
 	afx_msg void MenuFileQuit();
@@ -40,6 +42,7 @@ private:
 	afx_msg	void ToolBarButton1();
 
 	void updateIndexOnSelect();
+	void updateSceneGraphControls();
 
 
 	DECLARE_MESSAGE_MAP()	// required macro for message map functionality  One per class

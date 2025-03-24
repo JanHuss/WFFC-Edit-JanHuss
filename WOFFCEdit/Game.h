@@ -58,7 +58,6 @@ public:
 	int m_selectedObject;
 	int getSelectedObject();
 	RECT m_ScreenDimensions;
-	
 	void setDialogBoxOpen(bool dBO);
 	bool getDialogBoxOpen();
 

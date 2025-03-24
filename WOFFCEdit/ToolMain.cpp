@@ -373,6 +373,10 @@ void ToolMain::UpdateInput(MSG * msg)
 		m_toolInputCommands.down = true;
 	else
 		m_toolInputCommands.down = false;
+	if (m_keyArray[VK_CONTROL] && m_keyArray['T'])
+		m_toolInputCommands.openTransport = true;
+	else
+		m_toolInputCommands.openTransport = false;
 	//rotation
 	if (m_keyArray['E'])
 	{
