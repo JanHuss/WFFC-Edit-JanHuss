@@ -59,7 +59,7 @@ public:
 	afx_msg void End();		//kill the dialogue
 	afx_msg void Select();	//Item has been selected
 
-
+	bool onEndFunctionCall = false;
 
 
 	public:

@@ -4,7 +4,7 @@
 #include <afxext.h>
 #include <afx.h>
 #include "pch.h"
-#include "Game.h"
+
 #include "ToolMain.h"
 #include "resource.h"
 #include "MFCFrame.h"

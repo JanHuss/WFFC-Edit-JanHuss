@@ -59,6 +59,8 @@ public:
 	int getSelectedObject();
 	RECT m_ScreenDimensions;
 	
+	void setDialogBoxOpen(bool dBO);
+	bool getDialogBoxOpen();
 
 #ifdef DXTK_AUDIO
 	void NewAudioDevice();
@@ -83,6 +85,7 @@ private:
 	float lastMouseX = 0.0f;
 	float lastMouseY = 0.0f;
 	bool firstMouse = true; 
+	bool isDialogBox = false;
 	
 	//camera
 	DirectX::SimpleMath::Vector3		m_camPosition;

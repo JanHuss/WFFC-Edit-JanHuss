@@ -79,7 +79,10 @@ int MFCMain::Run()
 			//send current object ID to status bar in The main frame
 			m_frame->m_wndStatusBar.SetPaneText(1, statusString.c_str(), 1);
 		}
-		updateIndexOnSelect();
+		// if dialog box end is true then set the dialog box to false
+		if (m_TransportControls.onEndFunctionCall)
+			m_ToolSystem.m_d3dRenderer.setDialogBoxOpen(false);
+
 	}
 
 	return (int)msg.wParam;
@@ -112,6 +115,9 @@ void MFCMain::MenuEditTransport()
 	m_TransportControls.Create(IDD_TRANSPORT);	//Start up modeless
 	m_TransportControls.ShowWindow(SW_SHOW);	//show modeless
 	m_TransportControls.SetObjectData(&m_ToolSystem.m_sceneGraph, &m_ToolSystem.m_selectedObject);
+	updateIndexOnSelect();
+	m_TransportControls.onEndFunctionCall = false;
+	m_ToolSystem.m_d3dRenderer.setDialogBoxOpen(true);
 }
 
 void MFCMain::ToolBarButton1()

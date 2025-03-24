@@ -54,6 +54,7 @@ TransportControls::TransportControls(CWnd* pParent)
 
 TransportControls::~TransportControls()
 {
+
 }
 
 void TransportControls::SetObjectData(std::vector<SceneObject>* SceneGraph, int* selection)
@@ -94,6 +95,8 @@ void TransportControls::DoDataExchange(CDataExchange* pDX)
 
 void TransportControls::End()
 {
+	// set flag here to tell that mouse picking is allowed
+	onEndFunctionCall = true;
 	DestroyWindow();
 }
 
@@ -174,16 +177,16 @@ void TransportControls::OnBnClickedCancel()
 
 void TransportControls::OnBnClickedApply()
 {
-	//if (UpdateData(TRUE))
-	//{
-	// // Update the selected object's translate values.
-    //    if (m_sceneGraph != nullptr && index >= 0 && index < (int)m_sceneGraph->size())
-    //    {
-    //        (*m_sceneGraph)[index].posX = objectTranslateX;
-    //        (*m_sceneGraph)[index].posY = objectTranslateY;
-    //        (*m_sceneGraph)[index].posZ = objectTranslateZ;
-    //    }
-	//}
+	if (UpdateData(TRUE))
+	{
+	 // Update the selected object's translate values.
+        if (m_sceneGraph != nullptr && index >= 0 && index < (int)m_sceneGraph->size())
+        {
+            (*m_sceneGraph)[index].posX = objectTranslateX;
+            (*m_sceneGraph)[index].posY = objectTranslateY;
+            (*m_sceneGraph)[index].posZ = objectTranslateZ;
+        }
+	}
 }
 
 
