@@ -263,9 +263,14 @@ void Game::Render()
 				if (auto basicEffect = dynamic_cast<BasicEffect*>(effect))
 				{
 					if (isSelected)
-						basicEffect->SetDiffuseColor(DirectX::XMVectorSet(1.0f, 0.0f, 0.0f, 0.0f)); // Red tint for selected.
+					{
+						if (i == m_selectedObject)
+							basicEffect->SetDiffuseColor(DirectX::XMVectorSet(1.0f, 0.0f, 0.0f, 0.0f)); 
+						else
+							basicEffect->SetDiffuseColor(DirectX::XMVectorSet(0.0f, 1.0f, 0.0f, 0.0f));
+					}
 					else
-						basicEffect->SetDiffuseColor(DirectX::XMVectorSet(1.0f, 1.0f, 1.0f, 1.0f)); // Default color.
+						basicEffect->SetDiffuseColor(DirectX::XMVectorSet(1.0f, 1.0f, 1.0f, 1.0f));
 				}
 				});
 		}

@@ -4,21 +4,21 @@ D:\UniWork\Year 04\CMP405 - Tools\Coursework\WFFC-Edit-JanHuss\WOFFCEdit\Game.cp
 D:\UniWork\Year 04\CMP405 - Tools\Coursework\WFFC-Edit-JanHuss\WOFFCEdit\Game.cpp(254,57): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
 D:\UniWork\Year 04\CMP405 - Tools\Coursework\WFFC-Edit-JanHuss\WOFFCEdit\Game.cpp(253,57): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
 D:\UniWork\Year 04\CMP405 - Tools\Coursework\WFFC-Edit-JanHuss\WOFFCEdit\Game.cpp(252,97): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
-D:\UniWork\Year 04\CMP405 - Tools\Coursework\WFFC-Edit-JanHuss\WOFFCEdit\Game.cpp(309,10): warning C4101: 'Buffer': unreferenced local variable
-D:\UniWork\Year 04\CMP405 - Tools\Coursework\WFFC-Edit-JanHuss\WOFFCEdit\Game.cpp(433,17): warning C4267: 'initializing': conversion from 'size_t' to 'int', possible loss of data
-D:\UniWork\Year 04\CMP405 - Tools\Coursework\WFFC-Edit-JanHuss\WOFFCEdit\Game.cpp(554,36): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
-D:\UniWork\Year 04\CMP405 - Tools\Coursework\WFFC-Edit-JanHuss\WOFFCEdit\Game.cpp(555,28): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
-D:\UniWork\Year 04\CMP405 - Tools\Coursework\WFFC-Edit-JanHuss\WOFFCEdit\Game.cpp(556,36): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
-D:\UniWork\Year 04\CMP405 - Tools\Coursework\WFFC-Edit-JanHuss\WOFFCEdit\Game.cpp(654,14): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
-D:\UniWork\Year 04\CMP405 - Tools\Coursework\WFFC-Edit-JanHuss\WOFFCEdit\Game.cpp(653,53): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
-D:\UniWork\Year 04\CMP405 - Tools\Coursework\WFFC-Edit-JanHuss\WOFFCEdit\Game.cpp(657,14): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
-D:\UniWork\Year 04\CMP405 - Tools\Coursework\WFFC-Edit-JanHuss\WOFFCEdit\Game.cpp(656,52): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
-D:\UniWork\Year 04\CMP405 - Tools\Coursework\WFFC-Edit-JanHuss\WOFFCEdit\Game.cpp(672,47): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
-D:\UniWork\Year 04\CMP405 - Tools\Coursework\WFFC-Edit-JanHuss\WOFFCEdit\Game.cpp(671,47): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
-D:\UniWork\Year 04\CMP405 - Tools\Coursework\WFFC-Edit-JanHuss\WOFFCEdit\Game.cpp(670,47): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
-D:\UniWork\Year 04\CMP405 - Tools\Coursework\WFFC-Edit-JanHuss\WOFFCEdit\Game.cpp(687,23): warning C4244: 'argument': conversion from 'LONG' to 'float', possible loss of data
-D:\UniWork\Year 04\CMP405 - Tools\Coursework\WFFC-Edit-JanHuss\WOFFCEdit\Game.cpp(686,23): warning C4244: 'argument': conversion from 'LONG' to 'float', possible loss of data
-D:\UniWork\Year 04\CMP405 - Tools\Coursework\WFFC-Edit-JanHuss\WOFFCEdit\Game.cpp(697,23): warning C4244: 'argument': conversion from 'LONG' to 'float', possible loss of data
-D:\UniWork\Year 04\CMP405 - Tools\Coursework\WFFC-Edit-JanHuss\WOFFCEdit\Game.cpp(696,23): warning C4244: 'argument': conversion from 'LONG' to 'float', possible loss of data
-D:\UniWork\Year 04\CMP405 - Tools\Coursework\WFFC-Edit-JanHuss\WOFFCEdit\Game.cpp(737): warning C4715: 'Game::MousePicking': not all control paths return a value
+D:\UniWork\Year 04\CMP405 - Tools\Coursework\WFFC-Edit-JanHuss\WOFFCEdit\Game.cpp(295,10): warning C4101: 'Buffer': unreferenced local variable
+D:\UniWork\Year 04\CMP405 - Tools\Coursework\WFFC-Edit-JanHuss\WOFFCEdit\Game.cpp(419,17): warning C4267: 'initializing': conversion from 'size_t' to 'int', possible loss of data
+D:\UniWork\Year 04\CMP405 - Tools\Coursework\WFFC-Edit-JanHuss\WOFFCEdit\Game.cpp(540,36): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+D:\UniWork\Year 04\CMP405 - Tools\Coursework\WFFC-Edit-JanHuss\WOFFCEdit\Game.cpp(541,28): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+D:\UniWork\Year 04\CMP405 - Tools\Coursework\WFFC-Edit-JanHuss\WOFFCEdit\Game.cpp(542,36): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+D:\UniWork\Year 04\CMP405 - Tools\Coursework\WFFC-Edit-JanHuss\WOFFCEdit\Game.cpp(640,14): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+D:\UniWork\Year 04\CMP405 - Tools\Coursework\WFFC-Edit-JanHuss\WOFFCEdit\Game.cpp(639,53): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+D:\UniWork\Year 04\CMP405 - Tools\Coursework\WFFC-Edit-JanHuss\WOFFCEdit\Game.cpp(643,14): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+D:\UniWork\Year 04\CMP405 - Tools\Coursework\WFFC-Edit-JanHuss\WOFFCEdit\Game.cpp(642,52): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+D:\UniWork\Year 04\CMP405 - Tools\Coursework\WFFC-Edit-JanHuss\WOFFCEdit\Game.cpp(658,47): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
+D:\UniWork\Year 04\CMP405 - Tools\Coursework\WFFC-Edit-JanHuss\WOFFCEdit\Game.cpp(657,47): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
+D:\UniWork\Year 04\CMP405 - Tools\Coursework\WFFC-Edit-JanHuss\WOFFCEdit\Game.cpp(656,47): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
+D:\UniWork\Year 04\CMP405 - Tools\Coursework\WFFC-Edit-JanHuss\WOFFCEdit\Game.cpp(673,23): warning C4244: 'argument': conversion from 'LONG' to 'float', possible loss of data
+D:\UniWork\Year 04\CMP405 - Tools\Coursework\WFFC-Edit-JanHuss\WOFFCEdit\Game.cpp(672,23): warning C4244: 'argument': conversion from 'LONG' to 'float', possible loss of data
+D:\UniWork\Year 04\CMP405 - Tools\Coursework\WFFC-Edit-JanHuss\WOFFCEdit\Game.cpp(683,23): warning C4244: 'argument': conversion from 'LONG' to 'float', possible loss of data
+D:\UniWork\Year 04\CMP405 - Tools\Coursework\WFFC-Edit-JanHuss\WOFFCEdit\Game.cpp(682,23): warning C4244: 'argument': conversion from 'LONG' to 'float', possible loss of data
+D:\UniWork\Year 04\CMP405 - Tools\Coursework\WFFC-Edit-JanHuss\WOFFCEdit\Game.cpp(723): warning C4715: 'Game::MousePicking': not all control paths return a value
   Win32SimpleSample.vcxproj -> D:\UniWork\Year 04\CMP405 - Tools\Coursework\WFFC-Edit-JanHuss\WOFFCEdit\x64\Debug\WoFEdit.exe
