@@ -1,4 +1,10 @@
-﻿  ToolMain.cpp
+﻿  MFCFrame.cpp
+  _WIN32_WINNT not defined. Defaulting to _WIN32_WINNT_MAXVER (see WinSDKVer.h)
+  MFCMain.cpp
+  _WIN32_WINNT not defined. Defaulting to _WIN32_WINNT_MAXVER (see WinSDKVer.h)
+  Main.cpp
+  _WIN32_WINNT not defined. Defaulting to _WIN32_WINNT_MAXVER (see WinSDKVer.h)
+  ToolMain.cpp
   _WIN32_WINNT not defined. Defaulting to _WIN32_WINNT_MAXVER (see WinSDKVer.h)
 D:\UniWork\Year 04\CMP405 - Tools\Coursework\WFFC-Edit-JanHuss\WOFFCEdit\ToolMain.cpp(106,46): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
 D:\UniWork\Year 04\CMP405 - Tools\Coursework\WFFC-Edit-JanHuss\WOFFCEdit\ToolMain.cpp(107,46): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
@@ -28,4 +34,5 @@ D:\UniWork\Year 04\CMP405 - Tools\Coursework\WFFC-Edit-JanHuss\WOFFCEdit\ToolMai
 D:\UniWork\Year 04\CMP405 - Tools\Coursework\WFFC-Edit-JanHuss\WOFFCEdit\ToolMain.cpp(157,54): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
 D:\UniWork\Year 04\CMP405 - Tools\Coursework\WFFC-Edit-JanHuss\WOFFCEdit\ToolMain.cpp(158,57): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
 D:\UniWork\Year 04\CMP405 - Tools\Coursework\WFFC-Edit-JanHuss\WOFFCEdit\ToolMain.cpp(218,17): warning C4267: 'initializing': conversion from 'size_t' to 'int', possible loss of data
+  Generating Code...
   Win32SimpleSample.vcxproj -> D:\UniWork\Year 04\CMP405 - Tools\Coursework\WFFC-Edit-JanHuss\WOFFCEdit\x64\Debug\WoFEdit.exe

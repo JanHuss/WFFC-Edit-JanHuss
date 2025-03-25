@@ -31,6 +31,8 @@ public: //methods
 	// Jan tools
 	void copy();
 	void paste();
+	void undo();
+	std::vector<std::vector<SceneObject>> m_undoStack;
 
 public:	//variables
 	std::vector<SceneObject>    m_sceneGraph;	//our scenegraph storing all the objects in the current chunk

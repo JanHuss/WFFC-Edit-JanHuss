@@ -320,6 +320,8 @@ void ToolMain::UpdateInput(MSG* msg)
 				copy();
 			else if (m_keyArray[VK_CONTROL] && m_keyArray['V'])
 				paste();
+			if (m_keyArray[VK_CONTROL] && m_keyArray['Z'])
+				undo();
 		}
 		break;
 	case WM_KEYUP:
@@ -447,6 +449,7 @@ void ToolMain::copy()
 
 void ToolMain::paste()
 {
+	m_undoStack.push_back(m_sceneGraph);
 	// Offset for the object not to spawn on the same location 
 	// as the pasted ones
 	const float offset = 5.0f;
@@ -459,4 +462,15 @@ void ToolMain::paste()
 		m_sceneGraph.push_back(newObject);
 	}
 	m_d3dRenderer.BuildDisplayList(&m_sceneGraph);
+}
+
+void ToolMain::undo()
+{
+	if (!m_undoStack.empty())
+	{
+		m_sceneGraph = m_undoStack.back();
+		m_undoStack.pop_back();
+
+		m_d3dRenderer.BuildDisplayList(&m_sceneGraph);
+	}
 }
