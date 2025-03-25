@@ -121,13 +121,12 @@ void Game::SetGridState(bool state)
 // Executes the basic game loop.
 void Game::Tick(InputCommands *Input)
 {
-	//copy over the input commands so we have a local version to use elsewhere.
 	m_InputCommands = *Input;
     m_timer.Tick([&]()
     {
         Update(m_timer);
     });
-
+	// --- Object Selection ---
 	Mouse::State currentMouseState = m_mouse->GetState();
 	static Mouse::State previousMouseState;
 	Keyboard::State currentKeyboard = m_keyboard->GetState();
@@ -151,13 +150,65 @@ void Game::Tick(InputCommands *Input)
 			m_selectedObjects.clear();
 			if (pickedID != -1)
 				m_selectedObjects.push_back(pickedID);
-			
 		}
 		if (m_selectedObject == pickedID)
 			m_selectedObject = -1;
 		else
 			m_selectedObject = pickedID;
+
+		if (pickedID != -1)
+		{
+			m_draggedObjectIndex = pickedID;
+			m_dragging = true;
+		}
 	}
+	// --- Object Dragging ---
+	if (!currentMouseState.leftButton && previousMouseState.leftButton)
+	{
+		m_dragging = false;
+		m_draggedObjectIndex = -1;
+	}
+
+	if (m_dragging && m_draggedObjectIndex != -1)
+	{
+		XMVECTOR nearPoint = XMVector3Unproject(
+        XMVectorSet(currentMouseState.x, currentMouseState.y, 0.0f, 1.0f),
+        0.0f, 0.0f,
+        static_cast<float>(m_ScreenDimensions.right),
+        static_cast<float>(m_ScreenDimensions.bottom),
+        m_deviceResources->GetScreenViewport().MinDepth,
+        m_deviceResources->GetScreenViewport().MaxDepth,
+        m_projection, m_view, XMMatrixIdentity());
+
+    XMVECTOR farPoint = XMVector3Unproject(
+        XMVectorSet(currentMouseState.x, currentMouseState.y, 1.0f, 1.0f),
+        0.0f, 0.0f,
+        static_cast<float>(m_ScreenDimensions.right),
+        static_cast<float>(m_ScreenDimensions.bottom),
+        m_deviceResources->GetScreenViewport().MinDepth,
+        m_deviceResources->GetScreenViewport().MaxDepth,
+        m_projection, m_view, XMMatrixIdentity());
+
+    // Compute the picking ray's direction.
+    XMVECTOR rayDirection = XMVector3Normalize(farPoint - nearPoint);
+
+    // Define a horizontal plane.
+    // For instance, drag along the plane at the object's original Y value.
+    float planeY = m_displayList[m_draggedObjectIndex].m_position.y;
+
+    // Compute t where the ray intersects the plane: (planeY - nearPoint.y) / rayDir.y
+    float nearY = XMVectorGetY(nearPoint);
+    float directionY = XMVectorGetY(rayDirection);
+    if (fabs(directionY) > 0.0001f)
+    {
+        float t = (planeY - nearY) / directionY;
+        XMVECTOR intersectionPoint = nearPoint + rayDirection * t;
+        DirectX::SimpleMath::Vector3 newPosition;
+        XMStoreFloat3(&newPosition, intersectionPoint);
+        m_displayList[m_draggedObjectIndex].m_position = newPosition;
+    }
+	}
+
 	previousMouseState = currentMouseState;
 
 #ifdef DXTK_AUDIO
@@ -505,9 +556,6 @@ void Game::SaveDisplayChunk(ChunkObject * SceneChunk)
 void Game::cameraMovement(DX::StepTimer const& timer)
 {
     // camera rotation
-	
-	Vector3 planarMotionVector = m_camLookDirection;
-	planarMotionVector.y = 0.0;
 
 	if (m_InputCommands.rotRight)
 	{
@@ -551,7 +599,6 @@ void Game::cameraMovement(DX::StepTimer const& timer)
 	m_camLookDirection.Cross(Vector3::UnitY, m_camRight);
 	m_camRight.Normalize();
 
-	//process input and update stuff
 	if (m_InputCommands.forward)
 	{	
 		m_camPosition += m_camLookDirection * m_movespeed;

@@ -94,6 +94,10 @@ private:
 	DirectX::SimpleMath::Vector3		m_camRight;
 	float m_camRotRate;
 
+	// dragging variables
+	bool m_dragging = false;
+	int m_draggedObjectIndex = -1;
+
 	//control variables
 	bool m_grid;							//grid rendering on / off
 	// Device resources.
