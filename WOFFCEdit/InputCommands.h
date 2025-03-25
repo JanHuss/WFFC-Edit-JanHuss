@@ -16,5 +16,8 @@ struct InputCommands
 
 	bool leftShift;
 	bool openTransport;
+	bool copy;
+	bool paste;
 	bool undo;
+
 };

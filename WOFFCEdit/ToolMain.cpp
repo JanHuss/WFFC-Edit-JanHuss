@@ -14,11 +14,11 @@ ToolMain::ToolMain()
 	m_databaseConnection = NULL;
 
 	//zero input commands
-	m_toolInputCommands.forward		= false;
-	m_toolInputCommands.back		= false;
-	m_toolInputCommands.left		= false;
-	m_toolInputCommands.right		= false;
-	
+	m_toolInputCommands.forward = false;
+	m_toolInputCommands.back = false;
+	m_toolInputCommands.left = false;
+	m_toolInputCommands.right = false;
+
 
 	m_toolInputCommands.leftShift = false;
 }
@@ -49,21 +49,21 @@ bool ToolMain::getBool()
 void ToolMain::onActionInitialise(HWND handle, int width, int height)
 {
 	//window size, handle etc for directX
-	m_width		= width;
-	m_height	= height;
-	
+	m_width = width;
+	m_height = height;
+
 	m_d3dRenderer.Initialize(handle, m_width, m_height);
 
 	//database connection establish
 	int rc;
-	rc = sqlite3_open_v2("database/test.db",&m_databaseConnection, SQLITE_OPEN_READWRITE, NULL);
+	rc = sqlite3_open_v2("database/test.db", &m_databaseConnection, SQLITE_OPEN_READWRITE, NULL);
 
-	if (rc) 
+	if (rc)
 	{
 		TRACE("Can't open database");
 		//if the database cant open. Perhaps a more catastrophic error would be better here
 	}
-	else 
+	else
 	{
 		TRACE("Opened database successfully");
 	}
@@ -84,24 +84,24 @@ void ToolMain::onActionLoad()
 
 	//SQL
 	int rc;
-	char *sqlCommand;
-	char *ErrMSG = 0;
-	sqlite3_stmt *pResults;								//results of the query
-	sqlite3_stmt *pResultsChunk;
+	char* sqlCommand;
+	char* ErrMSG = 0;
+	sqlite3_stmt* pResults;								//results of the query
+	sqlite3_stmt* pResultsChunk;
 
 	//OBJECTS IN THE WORLD
 	//prepare SQL Text
 	sqlCommand = "SELECT * from Objects";				//sql command which will return all records from the objects table.
 	//Send Command and fill result object
-	rc = sqlite3_prepare_v2(m_databaseConnection, sqlCommand, -1, &pResults, 0 );
-	
+	rc = sqlite3_prepare_v2(m_databaseConnection, sqlCommand, -1, &pResults, 0);
+
 	//loop for each row in results until there are no more rows.  ie for every row in the results. We create and object
 	while (sqlite3_step(pResults) == SQLITE_ROW)
-	{	
+	{
 		SceneObject newSceneObject;
 		newSceneObject.ID = sqlite3_column_int(pResults, 0);
 		newSceneObject.chunk_ID = sqlite3_column_int(pResults, 1);
-		newSceneObject.model_path		= reinterpret_cast<const char*>(sqlite3_column_text(pResults, 2));
+		newSceneObject.model_path = reinterpret_cast<const char*>(sqlite3_column_text(pResults, 2));
 		newSceneObject.tex_diffuse_path = reinterpret_cast<const char*>(sqlite3_column_text(pResults, 3));
 		newSceneObject.posX = sqlite3_column_double(pResults, 4);
 		newSceneObject.posY = sqlite3_column_double(pResults, 5);
@@ -156,7 +156,7 @@ void ToolMain::onActionLoad()
 		newSceneObject.light_constant = sqlite3_column_double(pResults, 53);
 		newSceneObject.light_linear = sqlite3_column_double(pResults, 54);
 		newSceneObject.light_quadratic = sqlite3_column_double(pResults, 55);
-	
+
 
 		//send completed object to scenegraph
 		m_sceneGraph.push_back(newSceneObject);
@@ -165,7 +165,7 @@ void ToolMain::onActionLoad()
 	//THE WORLD CHUNK
 	//prepare SQL Text
 	sqlCommand = "SELECT * from Chunks";				//sql command which will return all records from  chunks table. There is only one tho.
-														//Send Command and fill result object
+	//Send Command and fill result object
 	rc = sqlite3_prepare_v2(m_databaseConnection, sqlCommand, -1, &pResultsChunk, 0);
 
 
@@ -202,10 +202,10 @@ void ToolMain::onActionSave()
 {
 	//SQL
 	int rc;
-	char *sqlCommand;
-	char *ErrMSG = 0;
-	sqlite3_stmt *pResults;								//results of the query
-	
+	char* sqlCommand;
+	char* ErrMSG = 0;
+	sqlite3_stmt* pResults;								//results of the query
+
 
 	//OBJECTS IN THE WORLD Delete them all
 	//prepare SQL Text
@@ -220,10 +220,10 @@ void ToolMain::onActionSave()
 	for (int i = 0; i < numObjects; i++)
 	{
 		std::stringstream command;
-		command << "INSERT INTO Objects " 
-			<<"VALUES(" << m_sceneGraph.at(i).ID << ","
-			<< m_sceneGraph.at(i).chunk_ID  << ","
-			<< "'" << m_sceneGraph.at(i).model_path <<"'" << ","
+		command << "INSERT INTO Objects "
+			<< "VALUES(" << m_sceneGraph.at(i).ID << ","
+			<< m_sceneGraph.at(i).chunk_ID << ","
+			<< "'" << m_sceneGraph.at(i).model_path << "'" << ","
 			<< "'" << m_sceneGraph.at(i).tex_diffuse_path << "'" << ","
 			<< m_sceneGraph.at(i).posX << ","
 			<< m_sceneGraph.at(i).posY << ","
@@ -282,7 +282,7 @@ void ToolMain::onActionSave()
 			<< ")";
 		std::string sqlCommand2 = command.str();
 		rc = sqlite3_prepare_v2(m_databaseConnection, sqlCommand2.c_str(), -1, &pResults, 0);
-		sqlite3_step(pResults);	
+		sqlite3_step(pResults);
 	}
 	MessageBox(NULL, L"Objects Saved", L"Notification", MB_OK);
 }
@@ -292,7 +292,7 @@ void ToolMain::onActionSaveTerrain()
 	m_d3dRenderer.SaveDisplayChunk(&m_chunk);
 }
 
-void ToolMain::Tick(MSG *msg)
+void ToolMain::Tick(MSG* msg)
 {
 	//do we have a selection
 	//do we have a mode
@@ -306,35 +306,41 @@ void ToolMain::Tick(MSG *msg)
 	m_d3dRenderer.Tick(&m_toolInputCommands);
 }
 
-void ToolMain::UpdateInput(MSG * msg)
+void ToolMain::UpdateInput(MSG* msg)
 {
 
 	switch (msg->message)
 	{
 		//Global inputs,  mouse position and keys etc
 	case WM_KEYDOWN:
-		m_keyArray[msg->wParam] = true;
+		if (!(msg->lParam & (1 << 30)))
+		{
+			m_keyArray[msg->wParam] = true;
+			if (m_keyArray[VK_CONTROL] && m_keyArray['C'])
+				copy();
+			else if (m_keyArray[VK_CONTROL] && m_keyArray['V'])
+				paste();
+		}
 		break;
-
 	case WM_KEYUP:
 		m_keyArray[msg->wParam] = false;
 		break;
 	case WM_ACTIVATE:
-    case WM_ACTIVATEAPP:
-    case WM_INPUT:
-    case WM_MOUSEMOVE:
-    case WM_LBUTTONDOWN:
-    case WM_LBUTTONUP:
-    case WM_RBUTTONDOWN:
-    case WM_RBUTTONUP:
-    case WM_MBUTTONDOWN:
-    case WM_MBUTTONUP:
-    case WM_MOUSEWHEEL:
-    case WM_XBUTTONDOWN:
-    case WM_XBUTTONUP:
-    case WM_MOUSEHOVER:
-        DirectX::Mouse::ProcessMessage(msg->message, msg->wParam, msg->lParam);
-        break;
+	case WM_ACTIVATEAPP:
+	case WM_INPUT:
+	case WM_MOUSEMOVE:
+	case WM_LBUTTONDOWN:
+	case WM_LBUTTONUP:
+	case WM_RBUTTONDOWN:
+	case WM_RBUTTONUP:
+	case WM_MBUTTONDOWN:
+	case WM_MBUTTONUP:
+	case WM_MOUSEWHEEL:
+	case WM_XBUTTONDOWN:
+	case WM_XBUTTONUP:
+	case WM_MOUSEHOVER:
+		DirectX::Mouse::ProcessMessage(msg->message, msg->wParam, msg->lParam);
+		break;
 	case IDD_TRANSPORT:
 		//DialogBox(HINSTANCE, MAKEINTRESOURCE(IDD_TRANSPORT), HWND, Transport);
 		break;
@@ -348,7 +354,7 @@ void ToolMain::UpdateInput(MSG * msg)
 		m_toolInputCommands.forward = true;
 	}
 	else m_toolInputCommands.forward = false;
-	
+
 	if (m_keyArray['S'])
 	{
 		m_toolInputCommands.back = true;
@@ -383,6 +389,22 @@ void ToolMain::UpdateInput(MSG * msg)
 		m_toolInputCommands.undo = true;
 	else
 		m_toolInputCommands.undo = false;
+	// copy
+	if (m_keyArray[VK_CONTROL] && m_keyArray['C'])
+	{
+		//copy();
+		m_toolInputCommands.copy = true;
+	}
+	else
+		m_toolInputCommands.copy = false;
+	// paste
+	if (m_keyArray[VK_CONTROL] && m_keyArray['V'])
+	{
+		//paste();
+		m_toolInputCommands.paste = true;
+	}
+	else
+		m_toolInputCommands.paste = false;
 	//rotation
 	if (m_keyArray['E'])
 	{
@@ -396,7 +418,7 @@ void ToolMain::UpdateInput(MSG * msg)
 	else m_toolInputCommands.rotLeft = false;
 	if (m_keyArray['U'])
 		m_toolInputCommands.rotUP = true;
-	else 
+	else
 		m_toolInputCommands.rotUP = false;
 	if (m_keyArray['J'])
 		m_toolInputCommands.rotDown = true;
@@ -408,4 +430,33 @@ void ToolMain::UpdateInput(MSG * msg)
 		m_toolInputCommands.leftShift = true;
 	else
 		m_toolInputCommands.leftShift = false;
+}
+
+void ToolMain::copy()
+{
+	// Clear clipboard as it needs to copy new objects
+	m_clipboard.clear();
+
+	// Then copy selected objects to clipboard
+	for (auto object : m_d3dRenderer.m_selectedObjects)
+	{
+		if (object >= 0 && object < m_sceneGraph.size())
+			m_clipboard.push_back(m_sceneGraph[object]);
+	}
+}
+
+void ToolMain::paste()
+{
+	// Offset for the object not to spawn on the same location 
+	// as the pasted ones
+	const float offset = 5.0f;
+
+	for (auto& object : m_clipboard)
+	{
+		SceneObject newObject = object;
+		newObject.posX += offset;
+		//newObject.ID = 
+		m_sceneGraph.push_back(newObject);
+	}
+	m_d3dRenderer.BuildDisplayList(&m_sceneGraph);
 }

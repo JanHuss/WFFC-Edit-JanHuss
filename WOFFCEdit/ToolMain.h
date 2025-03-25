@@ -28,6 +28,10 @@ public: //methods
 	void	Tick(MSG *msg);
 	void	UpdateInput(MSG *msg);
 
+	// Jan tools
+	void copy();
+	void paste();
+
 public:	//variables
 	std::vector<SceneObject>    m_sceneGraph;	//our scenegraph storing all the objects in the current chunk
 	ChunkObject					m_chunk;		//our landscape chunk
@@ -39,7 +43,8 @@ public:	//variables
 private:	//methods
 	void	onContentAdded();
 
-
+	// copy/paste
+	std::vector<SceneObject> m_clipboard;
 		
 private:	//variables
 	HWND	m_toolHandle;		//Handle to the  window
