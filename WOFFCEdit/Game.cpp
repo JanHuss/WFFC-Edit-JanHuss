@@ -158,6 +158,10 @@ void Game::Tick(InputCommands *Input)
 
 		if (pickedID != -1)
 		{
+		/*	 if (!m_dragging)
+        {
+            m_undoStack.push_back(m_sceneGraph);
+        }*/
 			m_draggedObjectIndex = pickedID;
 			m_dragging = true;
 		}
@@ -631,18 +635,26 @@ void Game::ProcessMouseMovement(DX::StepTimer const& timer)
 {
 	Mouse::State mouseState = m_mouse->GetState();
 	float deltaTime = 1.0f;
+	const float maxDeltaThreshold = 50.0f;
+	float sensitivity = 10.0f;
 
 	if (timer.GetFramesPerSecond() != 0)
-	deltaTime = 1.0f/timer.GetFramesPerSecond();
+			deltaTime = 1.0f/timer.GetFramesPerSecond();
 
 	if (mouseState.rightButton)
 	{
 		m_mouse->SetMode(Mouse::MODE_RELATIVE);
 
-		float sensitivity = 10.0f;
 
-		float offsetX = (mouseState.x) * sensitivity * deltaTime;
-		float offsetY = (mouseState.y) * sensitivity * deltaTime;
+        float offsetX = mouseState.x * sensitivity * deltaTime;
+        float offsetY = mouseState.y * sensitivity * deltaTime;
+
+        // Ignore offsets that are excessively large.
+        if (fabs(offsetX) > maxDeltaThreshold || fabs(offsetY) > maxDeltaThreshold)
+        {
+            offsetX = 0.0f;
+            offsetY = 0.0f;
+        }
 
 		m_camOrientation.y -= offsetX;
 		m_camOrientation.x -= offsetY;
@@ -669,6 +681,7 @@ void Game::ProcessMouseMovement(DX::StepTimer const& timer)
 	{
 		m_mouse->SetMode(Mouse::MODE_ABSOLUTE);
 		firstMouse = true;
+		firstRelativeFrame = true;
 	}
 }
 int Game::MousePicking()

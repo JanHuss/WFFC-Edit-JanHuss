@@ -294,15 +294,7 @@ void ToolMain::onActionSaveTerrain()
 
 void ToolMain::Tick(MSG* msg)
 {
-	//do we have a selection
-	//do we have a mode
-	//are we clicking / dragging /releasing
-	//has something changed
-		//update Scenegraph
-		//add to scenegraph
-		//resend scenegraph to Direct X renderer
 	m_selectedObject = m_d3dRenderer.getSelectedObject();
-	//Renderer Update Call
 	m_d3dRenderer.Tick(&m_toolInputCommands);
 }
 

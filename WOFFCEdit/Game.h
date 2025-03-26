@@ -60,6 +60,7 @@ public:
 	RECT m_ScreenDimensions;
 	void setDialogBoxOpen(bool dBO);
 	bool getDialogBoxOpen();
+	bool firstRelativeFrame = true;
 
 #ifdef DXTK_AUDIO
 	void NewAudioDevice();
