@@ -13,6 +13,7 @@
 #include "InputCommands.h"
 #include "Camera.h"
 #include <vector>
+#include <unordered_map>
 
 // A basic game implementation that creates a D3D11 device and
 // provides a game loop.
@@ -83,7 +84,6 @@ private:
 	InputCommands						m_InputCommands;
 
 	//functionality
-	//float								m_movespeed;
 	float lastMouseX = 0.0f;
 	float lastMouseY = 0.0f;
 	bool firstMouse = true; 
@@ -91,16 +91,12 @@ private:
 	
 	//camera
 	Camera m_camera;
-	//DirectX::SimpleMath::Vector3		m_camPosition;
-	//DirectX::SimpleMath::Vector3		m_camOrientation;
-	//DirectX::SimpleMath::Vector3		m_camLookAt;
-	//DirectX::SimpleMath::Vector3		m_camLookDirection;
-	//DirectX::SimpleMath::Vector3		m_camRight;
-	//float m_camRotRate;
 
 	// dragging variables
 	bool m_dragging = false;
-	int m_draggedObjectIndex = -1;
+	//int m_draggedObjectIndex = -1;
+	std::vector<int> m_draggedObjectIndices;
+	std::unordered_map<int, DirectX::SimpleMath::Vector3> m_dragOffsets;
 
 	//control variables
 	bool m_grid;							//grid rendering on / off

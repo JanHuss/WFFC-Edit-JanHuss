@@ -163,8 +163,12 @@ void Game::Tick(InputCommands* Input)
 			{
 				m_undoStack.push_back(m_sceneGraph);
 			}*/
-			m_draggedObjectIndex = pickedID;
+			//m_draggedObjectIndex = pickedID;
+			//m_dragging = true;
+
+			m_draggedObjectIndices = m_selectedObjects;
 			m_dragging = true;
+			m_dragOffsets.clear();
 
 			XMVECTOR nearPoint = XMVector3Unproject(
 				XMVectorSet(currentMouseState.x, currentMouseState.y, 0.0f, 1.0f),
@@ -185,15 +189,31 @@ void Game::Tick(InputCommands* Input)
 				m_projection, m_view, XMMatrixIdentity());
 
 			XMVECTOR rayDirection = XMVector3Normalize(farPoint - nearPoint);
-			float planeY = m_displayList[m_draggedObjectIndex].m_position.y;
+			//float planeY = m_displayList[m_draggedObjectIndex].m_position.y;
 			float nearY = XMVectorGetY(nearPoint);
 			float directionY = XMVectorGetY(rayDirection);
 			if (fabs(directionY) > 0.0001f)
 			{
-				float t = (planeY - nearY) / directionY;
-				XMVECTOR intersectionPoint = nearPoint + rayDirection * t;
-				XMVECTOR objPosition = XMLoadFloat3(&m_displayList[m_draggedObjectIndex].m_position);
-				m_dragOffset = objPosition - intersectionPoint;
+				//float t = (planeY - nearY) / directionY;
+				//XMVECTOR intersectionPoint = nearPoint + rayDirection * t;
+				//XMVECTOR objPosition = XMLoadFloat3(&m_displayList[m_draggedObjectIndex].m_position);
+				//m_dragOffset = objPosition - intersectionPoint;
+				for (int index : m_draggedObjectIndices)
+				{
+					//float planeY = m_displayList[index].m_position.y;
+					//float nearY = XMVectorGetY(nearPoint);
+					//float directionY = XMVectorGetY(rayDirection);
+					if (fabs(directionY) > 0.0001f)
+					{
+						float planeY = m_displayList[index].m_position.y;
+						float nearY = XMVectorGetY(nearPoint);
+						float directionY = XMVectorGetY(rayDirection);
+						float t = (planeY - nearY) / directionY;
+						XMVECTOR intersectionPoint = nearPoint + rayDirection * t;
+						XMVECTOR objPosition = XMLoadFloat3(&m_displayList[index].m_position);
+						m_dragOffsets[index] = objPosition - intersectionPoint;
+					}
+				}
 			}
 		}
 	}
@@ -201,10 +221,11 @@ void Game::Tick(InputCommands* Input)
 	if (!currentMouseState.leftButton && previousMouseState.leftButton)
 	{
 		m_dragging = false;
-		m_draggedObjectIndex = -1;
+		m_draggedObjectIndices.clear();
+		m_dragOffsets.clear();
 	}
 
-	if (m_dragging && m_draggedObjectIndex != -1)
+	if (m_dragging && !m_draggedObjectIndices.empty())
 	{
 		XMVECTOR nearPoint = XMVector3Unproject(
 			XMVectorSet(currentMouseState.x, currentMouseState.y, 0.0f, 1.0f),
@@ -227,16 +248,24 @@ void Game::Tick(InputCommands* Input)
 		// Calculate the picking ray's direction
 		XMVECTOR rayDirection = XMVector3Normalize(farPoint - nearPoint);
 		// Define a horizontal plane
-		float planeY = m_displayList[m_draggedObjectIndex].m_position.y;
+		//float planeY = m_displayList[m_draggedObjectIndex].m_position.y;
 		float nearY = XMVectorGetY(nearPoint);
 		float directionY = XMVectorGetY(rayDirection);
 
-		if (fabs(directionY) > 0.0001f)
+		for (int index : m_draggedObjectIndices)
 		{
-			float t = (planeY - nearY) / directionY;
-			XMVECTOR intersectionPoint = nearPoint + rayDirection * t;
-			XMVECTOR finalPosition = intersectionPoint + XMLoadFloat3(&m_dragOffset);
-			XMStoreFloat3(&m_displayList[m_draggedObjectIndex].m_position, finalPosition);
+			float planeY = m_displayList[index].m_position.y;
+			float nearY = XMVectorGetY(nearPoint);
+			float directionY = XMVectorGetY(rayDirection);
+
+			if (fabs(directionY) > 0.0001f)
+			{
+				float t = (planeY - nearY) / directionY;
+				XMVECTOR intersectionPoint = nearPoint + rayDirection * t;
+				XMVECTOR finalPosition = intersectionPoint + XMLoadFloat3(&m_dragOffsets[index]);
+				XMStoreFloat3(&m_displayList[index].m_position, finalPosition);
+			}
+
 		}
 	}
 
@@ -305,7 +334,7 @@ void Game::Update(DX::StepTimer const& timer)
 
 			if (m_audioEvent >= 11)
 				m_audioEvent = 0;
-}
+		}
 	}
 #endif
 
