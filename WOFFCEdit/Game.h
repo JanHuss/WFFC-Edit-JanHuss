@@ -11,6 +11,7 @@
 #include "DisplayChunk.h"
 #include "ChunkObject.h"
 #include "InputCommands.h"
+#include "Camera.h"
 #include <vector>
 
 // A basic game implementation that creates a D3D11 device and
@@ -82,19 +83,20 @@ private:
 	InputCommands						m_InputCommands;
 
 	//functionality
-	float								m_movespeed;
+	//float								m_movespeed;
 	float lastMouseX = 0.0f;
 	float lastMouseY = 0.0f;
 	bool firstMouse = true; 
 	bool isDialogBox = false;
 	
 	//camera
-	DirectX::SimpleMath::Vector3		m_camPosition;
-	DirectX::SimpleMath::Vector3		m_camOrientation;
-	DirectX::SimpleMath::Vector3		m_camLookAt;
-	DirectX::SimpleMath::Vector3		m_camLookDirection;
-	DirectX::SimpleMath::Vector3		m_camRight;
-	float m_camRotRate;
+	Camera m_camera;
+	//DirectX::SimpleMath::Vector3		m_camPosition;
+	//DirectX::SimpleMath::Vector3		m_camOrientation;
+	//DirectX::SimpleMath::Vector3		m_camLookAt;
+	//DirectX::SimpleMath::Vector3		m_camLookDirection;
+	//DirectX::SimpleMath::Vector3		m_camRight;
+	//float m_camRotRate;
 
 	// dragging variables
 	bool m_dragging = false;
