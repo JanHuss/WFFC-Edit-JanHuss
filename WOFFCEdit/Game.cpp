@@ -164,6 +164,36 @@ void Game::Tick(InputCommands *Input)
         }*/
 			m_draggedObjectIndex = pickedID;
 			m_dragging = true;
+
+			XMVECTOR nearPoint = XMVector3Unproject(
+		XMVectorSet(currentMouseState.x, currentMouseState.y, 0.0f, 1.0f),
+		0.0f, 0.0f,
+		static_cast<float>(m_ScreenDimensions.right),
+		static_cast<float>(m_ScreenDimensions.bottom),
+		m_deviceResources->GetScreenViewport().MinDepth,
+		m_deviceResources->GetScreenViewport().MaxDepth,
+		m_projection, m_view, XMMatrixIdentity());
+
+	XMVECTOR farPoint = XMVector3Unproject(
+		XMVectorSet(currentMouseState.x, currentMouseState.y, 1.0f, 1.0f),
+		0.0f, 0.0f,
+		static_cast<float>(m_ScreenDimensions.right),
+		static_cast<float>(m_ScreenDimensions.bottom),
+		m_deviceResources->GetScreenViewport().MinDepth,
+		m_deviceResources->GetScreenViewport().MaxDepth,
+		m_projection, m_view, XMMatrixIdentity());
+
+	XMVECTOR rayDirection = XMVector3Normalize(farPoint - nearPoint);
+	float planeY = m_displayList[m_draggedObjectIndex].m_position.y;
+	float nearY = XMVectorGetY(nearPoint);
+	float directionY = XMVectorGetY(rayDirection);
+	if (fabs(directionY) > 0.0001f)
+	{
+		float t = (planeY - nearY) / directionY;
+		XMVECTOR intersectionPoint = nearPoint + rayDirection * t;
+		XMVECTOR objPosition = XMLoadFloat3(&m_displayList[m_draggedObjectIndex].m_position);
+		m_dragOffset = objPosition - intersectionPoint;
+	}
 		}
 	}
 	// --- Object Dragging ---
@@ -193,23 +223,19 @@ void Game::Tick(InputCommands *Input)
         m_deviceResources->GetScreenViewport().MaxDepth,
         m_projection, m_view, XMMatrixIdentity());
 
-    // Compute the picking ray's direction.
+    // Calculate the picking ray's direction
     XMVECTOR rayDirection = XMVector3Normalize(farPoint - nearPoint);
-
-    // Define a horizontal plane.
-    // For instance, drag along the plane at the object's original Y value.
+    // Define a horizontal plane
     float planeY = m_displayList[m_draggedObjectIndex].m_position.y;
-
-    // Compute t where the ray intersects the plane: (planeY - nearPoint.y) / rayDir.y
     float nearY = XMVectorGetY(nearPoint);
     float directionY = XMVectorGetY(rayDirection);
+
     if (fabs(directionY) > 0.0001f)
     {
         float t = (planeY - nearY) / directionY;
-        XMVECTOR intersectionPoint = nearPoint + rayDirection * t;
-        DirectX::SimpleMath::Vector3 newPosition;
-        XMStoreFloat3(&newPosition, intersectionPoint);
-        m_displayList[m_draggedObjectIndex].m_position = newPosition;
+		XMVECTOR intersectionPoint = nearPoint + rayDirection * t;
+		XMVECTOR finalPosition = intersectionPoint + XMLoadFloat3(&m_dragOffset);
+		XMStoreFloat3(&m_displayList[m_draggedObjectIndex].m_position, finalPosition);
     }
 	}
 

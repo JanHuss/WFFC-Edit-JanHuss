@@ -61,6 +61,7 @@ public:
 	void setDialogBoxOpen(bool dBO);
 	bool getDialogBoxOpen();
 	bool firstRelativeFrame = true;
+	DirectX::SimpleMath::Vector3 m_dragOffset;
 
 #ifdef DXTK_AUDIO
 	void NewAudioDevice();
