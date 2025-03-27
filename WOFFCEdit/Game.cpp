@@ -645,6 +645,12 @@ void Game::ProcessMouseMovement(DX::StepTimer const& timer)
 	{
 		m_mouse->SetMode(Mouse::MODE_RELATIVE);
 
+		if (firstRelativeFrame)
+		{
+			firstRelativeFrame = false;
+			return;
+		}
+
 
         float offsetX = mouseState.x * sensitivity * deltaTime;
         float offsetY = mouseState.y * sensitivity * deltaTime;
