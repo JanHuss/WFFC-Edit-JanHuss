@@ -312,8 +312,11 @@ void ToolMain::UpdateInput(MSG* msg)
 				copy();
 			else if (m_keyArray[VK_CONTROL] && m_keyArray['V'])
 				paste();
+			if (m_keyArray[VK_CONTROL] && m_keyArray['D'])
+				duplicate();
 			if (m_keyArray[VK_CONTROL] && m_keyArray['Z'])
 				undo();
+
 		}
 		break;
 	case WM_KEYUP:
@@ -444,16 +447,22 @@ void ToolMain::paste()
 	m_undoStack.push_back(m_sceneGraph);
 	// Offset for the object not to spawn on the same location 
 	// as the pasted ones
-	const float offset = 5.0f;
+	const float pasteOffset = 5.0f;
 
 	for (auto& object : m_clipboard)
 	{
 		SceneObject newObject = object;
-		newObject.posX += offset;
+		newObject.posX += pasteOffset;
 		//newObject.ID = 
 		m_sceneGraph.push_back(newObject);
 	}
 	m_d3dRenderer.BuildDisplayList(&m_sceneGraph);
+}
+
+void ToolMain::duplicate()
+{
+	copy();
+	paste();
 }
 
 void ToolMain::undo()

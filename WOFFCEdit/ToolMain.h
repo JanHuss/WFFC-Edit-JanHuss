@@ -31,6 +31,7 @@ public: //methods
 	// Jan tools
 	void copy();
 	void paste();
+	void duplicate();
 	void undo();
 	std::vector<std::vector<SceneObject>> m_undoStack;
 
