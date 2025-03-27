@@ -19,7 +19,6 @@ ToolMain::ToolMain()
 	m_toolInputCommands.left = false;
 	m_toolInputCommands.right = false;
 
-
 	m_toolInputCommands.leftShift = false;
 }
 
@@ -53,6 +52,9 @@ void ToolMain::onActionInitialise(HWND handle, int width, int height)
 	m_height = height;
 
 	m_d3dRenderer.Initialize(handle, m_width, m_height);
+
+	// function pointer (lambda) to call the saveUndoState function when needed
+	m_d3dRenderer.onStartDragCallback = [this](){ this->saveUndoState();};
 
 	//database connection establish
 	int rc;
@@ -296,6 +298,10 @@ void ToolMain::Tick(MSG* msg)
 {
 	m_selectedObject = m_d3dRenderer.getSelectedObject();
 	m_d3dRenderer.Tick(&m_toolInputCommands);
+
+	if (!m_toolInputCommands.undo && !m_toolInputCommands.copy && 
+		!m_toolInputCommands.paste)
+			applyDisplayListEditsToSceneGraph();
 }
 
 void ToolMain::UpdateInput(MSG* msg)
@@ -363,7 +369,7 @@ void ToolMain::UpdateInput(MSG* msg)
 	}
 	else m_toolInputCommands.left = false;
 
-	if (m_keyArray['D'])
+	if (m_keyArray['D'] && !m_keyArray[VK_CONTROL])
 	{
 		m_toolInputCommands.right = true;
 	}
@@ -473,5 +479,22 @@ void ToolMain::undo()
 		m_undoStack.pop_back();
 
 		m_d3dRenderer.BuildDisplayList(&m_sceneGraph);
+	}
+}
+
+void ToolMain::saveUndoState()
+{
+	m_undoStack.push_back(m_sceneGraph);
+}
+
+void ToolMain::applyDisplayListEditsToSceneGraph()
+{
+	for (int i = 0; i < m_sceneGraph.size(); ++i)
+	{
+		if (i >= m_d3dRenderer.m_displayList.size()) break;
+
+		m_sceneGraph[i].posX = m_d3dRenderer.m_displayList[i].m_position.x;
+		m_sceneGraph[i].posY = m_d3dRenderer.m_displayList[i].m_position.y;
+		m_sceneGraph[i].posZ = m_d3dRenderer.m_displayList[i].m_position.z;
 	}
 }

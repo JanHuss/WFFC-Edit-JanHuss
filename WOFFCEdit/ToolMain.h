@@ -33,6 +33,8 @@ public: //methods
 	void paste();
 	void duplicate();
 	void undo();
+	void saveUndoState();
+	void applyDisplayListEditsToSceneGraph(); 
 	std::vector<std::vector<SceneObject>> m_undoStack;
 
 public:	//variables

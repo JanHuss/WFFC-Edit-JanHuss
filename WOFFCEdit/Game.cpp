@@ -24,36 +24,6 @@ Game::Game()
 	//initial Settings
 	//modes
 	m_grid = false;
-
-	////functional
-	//m_movespeed = 0.30;
-	//m_camRotRate = 3.0;
-	//
-	////camera
-	//m_camPosition.x = 11.5f;
-	//m_camPosition.y = 6.19f;
-	//m_camPosition.z = -7.61f;
-	//
-	//m_camOrientation.x = 0;
-	//m_camOrientation.y = 0;
-	//m_camOrientation.z = 0;
-	//
-	//m_camLookAt.x = 0.0f;
-	//m_camLookAt.y = 0.0f;
-	//m_camLookAt.z = 0.0f;
-	//
-	//m_camLookDirection.x = 0.0f;
-	//m_camLookDirection.y = 0.0f;
-	//m_camLookDirection.z = 0.0f;
-	//
-	//m_camRight.x = 0.0f;
-	//m_camRight.y = 0.0f;
-	//m_camRight.z = 0.0f;
-	//
-	//m_camOrientation.x = -18.0f;
-	//m_camOrientation.y = -32.0f;
-	//m_camOrientation.z = 0.0f;
-
 }
 
 Game::~Game()
@@ -170,6 +140,13 @@ void Game::Tick(InputCommands* Input)
 			m_dragging = true;
 			m_dragOffsets.clear();
 
+			// for undoing dragged objects use a callback by using a function pointer
+			if (!undoPushedThisDrag && onStartDragCallback)
+			{
+				onStartDragCallback();
+				undoPushedThisDrag = true;
+			}
+
 			XMVECTOR nearPoint = XMVector3Unproject(
 				XMVectorSet(currentMouseState.x, currentMouseState.y, 0.0f, 1.0f),
 				0.0f, 0.0f,
@@ -189,20 +166,13 @@ void Game::Tick(InputCommands* Input)
 				m_projection, m_view, XMMatrixIdentity());
 
 			XMVECTOR rayDirection = XMVector3Normalize(farPoint - nearPoint);
-			//float planeY = m_displayList[m_draggedObjectIndex].m_position.y;
+
 			float nearY = XMVectorGetY(nearPoint);
 			float directionY = XMVectorGetY(rayDirection);
 			if (fabs(directionY) > 0.0001f)
 			{
-				//float t = (planeY - nearY) / directionY;
-				//XMVECTOR intersectionPoint = nearPoint + rayDirection * t;
-				//XMVECTOR objPosition = XMLoadFloat3(&m_displayList[m_draggedObjectIndex].m_position);
-				//m_dragOffset = objPosition - intersectionPoint;
 				for (int index : m_draggedObjectIndices)
 				{
-					//float planeY = m_displayList[index].m_position.y;
-					//float nearY = XMVectorGetY(nearPoint);
-					//float directionY = XMVectorGetY(rayDirection);
 					if (fabs(directionY) > 0.0001f)
 					{
 						float planeY = m_displayList[index].m_position.y;
@@ -223,6 +193,7 @@ void Game::Tick(InputCommands* Input)
 		m_dragging = false;
 		m_draggedObjectIndices.clear();
 		m_dragOffsets.clear();
+		undoPushedThisDrag = false;
 	}
 
 	if (m_dragging && !m_draggedObjectIndices.empty())
@@ -631,127 +602,6 @@ void Game::SaveDisplayChunk(ChunkObject* SceneChunk)
 	m_displayChunk.SaveHeightMap();			//save heightmap to file.
 }
 
-//void Game::cameraMovement(DX::StepTimer const& timer)
-//{
-	//// camera rotation
-	//
-	//if (m_InputCommands.rotRight)
-	//	m_camOrientation.y -= m_camRotRate;
-	//if (m_InputCommands.rotLeft)
-	//	m_camOrientation.y += m_camRotRate;
-	//if (m_InputCommands.rotUP)
-	//{
-	//	m_camOrientation.x += m_camRotRate;
-	//	// prevent flipping
-	//	if (m_camOrientation.x > 89.0f)
-	//		m_camOrientation.x = 89.0f;
-	//}
-	//if (m_InputCommands.rotDown)
-	//{
-	//	m_camOrientation.x -= m_camRotRate;
-	//	// prevent flipping
-	//	if (m_camOrientation.x < -89.0f)
-	//		m_camOrientation.x = -89.0f;
-	//}
-	//
-	//ProcessMouseMovement(timer);
-	//
-	//float yaw = m_camOrientation.y * 3.1415f / 180.0f;
-	//float pitch = m_camOrientation.x * 3.1415f / 180.0f;
-	//
-	//m_camLookDirection.x = cos(pitch) * sin(yaw);
-	//m_camLookDirection.y = sin(pitch);
-	//m_camLookDirection.z = cos(pitch) * cos(yaw);
-	//
-	//
-	////create look direction from Euler angles in m_camOrientation
-	////m_camLookDirection.x = sin((m_camOrientation.y)*3.1415 / 180);
-	////m_camLookDirection.z = cos((m_camOrientation.y)*3.1415 / 180);
-	//m_camLookDirection.Normalize();
-	//
-	////create right vector from look Direction
-	//m_camLookDirection.Cross(Vector3::UnitY, m_camRight);
-	//m_camRight.Normalize();
-	//
-	//if (m_InputCommands.forward)
-	//	m_camPosition += m_camLookDirection * m_movespeed;
-	//if (m_InputCommands.back)
-	//	m_camPosition -= m_camLookDirection * m_movespeed;
-	//if (m_InputCommands.right)
-	//	m_camPosition += m_camRight * m_movespeed;
-	//if (m_InputCommands.left)
-	//	m_camPosition -= m_camRight * m_movespeed;
-	//if (m_InputCommands.up)
-	//	m_camPosition.y += m_movespeed;
-	//if (m_InputCommands.down)
-	//	m_camPosition.y -= m_movespeed;
-	//
-	////update lookat point
-	//m_camLookAt = m_camPosition + m_camLookDirection;
-	//
-	////apply camera vectors
-	//m_view = Matrix::CreateLookAt(m_camPosition, m_camLookAt, Vector3::UnitY);
-//}
-
-//void Game::ProcessMouseMovement(DX::StepTimer const& timer)
-//{
-//	Mouse::State mouseState = m_mouse->GetState();
-//	float deltaTime = 1.0f;
-//	const float maxDeltaThreshold = 50.0f;
-//	float sensitivity = 10.0f;
-//
-//	if (timer.GetFramesPerSecond() != 0)
-//		deltaTime = 1.0f / timer.GetFramesPerSecond();
-//
-//	if (mouseState.rightButton)
-//	{
-//		m_mouse->SetMode(Mouse::MODE_RELATIVE);
-//
-//		if (firstRelativeFrame)
-//		{
-//			firstRelativeFrame = false;
-//			return;
-//		}
-//
-//
-//		float offsetX = mouseState.x * sensitivity * deltaTime;
-//		float offsetY = mouseState.y * sensitivity * deltaTime;
-//
-//		// Ignore offsets that are excessively large.
-//		if (fabs(offsetX) > maxDeltaThreshold || fabs(offsetY) > maxDeltaThreshold)
-//		{
-//			offsetX = 0.0f;
-//			offsetY = 0.0f;
-//		}
-//
-//		m_camOrientation.y -= offsetX;
-//		m_camOrientation.x -= offsetY;
-//
-//		// Preventing flipping
-//		if (m_camOrientation.x > 89.0f)
-//			m_camOrientation.x = 89.0f;
-//		if (m_camOrientation.x < -89.0f)
-//			m_camOrientation.x = -89.0f;
-//
-//		float yaw = XMConvertToRadians(m_camOrientation.y);
-//		float pitch = XMConvertToRadians(m_camOrientation.x);
-//
-//		m_camLookDirection.x = cosf(pitch) * sinf(yaw);
-//		m_camLookDirection.y = sinf(pitch);
-//		m_camLookDirection.z = cosf(pitch) * cosf(yaw);
-//		m_camLookDirection.Normalize();
-//
-//		m_camRight = m_camLookDirection.Cross(Vector3::UnitY);
-//		m_camRight.Normalize();
-//
-//	}
-//	else
-//	{
-//		m_mouse->SetMode(Mouse::MODE_ABSOLUTE);
-//		firstMouse = true;
-//		firstRelativeFrame = true;
-//	}
-//}
 int Game::MousePicking()
 {
 	if (!getDialogBoxOpen())

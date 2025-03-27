@@ -14,6 +14,7 @@
 #include "Camera.h"
 #include <vector>
 #include <unordered_map>
+#include <functional>
 
 // A basic game implementation that creates a D3D11 device and
 // provides a game loop.
@@ -64,6 +65,9 @@ public:
 	bool getDialogBoxOpen();
 	bool firstRelativeFrame = true;
 	DirectX::SimpleMath::Vector3 m_dragOffset;
+	std::function<void()> onStartDragCallback;
+	bool undoPushedThisDrag = false;
+	std::vector<DisplayObject>			m_displayList;
 
 #ifdef DXTK_AUDIO
 	void NewAudioDevice();
@@ -79,7 +83,6 @@ private:
 	void XM_CALLCONV DrawGrid(DirectX::FXMVECTOR xAxis, DirectX::FXMVECTOR yAxis, DirectX::FXMVECTOR origin, size_t xdivs, size_t ydivs, DirectX::GXMVECTOR color);
 
 	//tool specific
-	std::vector<DisplayObject>			m_displayList;
 	DisplayChunk						m_displayChunk;
 	InputCommands						m_InputCommands;
 
