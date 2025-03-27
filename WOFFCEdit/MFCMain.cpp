@@ -76,6 +76,16 @@ int MFCMain::Run()
 			//std::wstring statusString = L"shift bool is: " + std::to_wstring(m_ToolSystem.getBool());
 			m_ToolSystem.Tick(&msg);
 
+			// update the transport control values on selection of a different object
+			if (m_TransportControls.GetSafeHwnd() != NULL)
+			{
+				int selectedID = m_ToolSystem.getCurrentSelectionID();
+				if (selectedID != m_TransportControls.index) 
+				{
+					m_TransportControls.UpdateIndexOnSelect(selectedID);
+					m_TransportControls.UpdateTransportOnSelect();
+				}
+}
 			//send current object ID to status bar in The main frame
 			m_frame->m_wndStatusBar.SetPaneText(1, statusString.c_str(), 1);
 		}

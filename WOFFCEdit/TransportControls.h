@@ -77,10 +77,10 @@ public:
 
 	std::vector<SceneObject> * m_sceneGraph;
 
+	int index;
 private:
 
 
 	int * m_currentSelection;
-	int index;
 };
 INT_PTR CALLBACK TransportProc( HWND   hwndDlg,UINT   uMsg,WPARAM wParam,LPARAM lParam);

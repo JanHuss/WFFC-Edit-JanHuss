@@ -96,7 +96,8 @@ void Game::Tick(InputCommands* Input)
 		{
 			Update(m_timer);
 		});
-
+	if (!getDialogBoxOpen())
+	{
 	// --- Object Selection ---
 	Mouse::State currentMouseState = m_mouse->GetState();
 	static Mouse::State previousMouseState;
@@ -129,13 +130,6 @@ void Game::Tick(InputCommands* Input)
 
 		if (pickedID != -1)
 		{
-			/*	 if (!m_dragging)
-			{
-				m_undoStack.push_back(m_sceneGraph);
-			}*/
-			//m_draggedObjectIndex = pickedID;
-			//m_dragging = true;
-
 			m_draggedObjectIndices = m_selectedObjects;
 			m_dragging = true;
 			m_dragOffsets.clear();
@@ -241,7 +235,7 @@ void Game::Tick(InputCommands* Input)
 	}
 
 	previousMouseState = currentMouseState;
-
+	}
 #ifdef DXTK_AUDIO
 	// Only update audio engine once per frame
 	if (!m_audEngine->IsCriticalError() && m_audEngine->Update())
